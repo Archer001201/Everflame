@@ -13,6 +13,7 @@ namespace CoreMechanics
         public Vector2 interval;
         public float duration = 15f;
         public int poolSize = 10;
+        public List<EventType> eventTypes;
 
         private Queue<GameObject> _objectPool;
 
@@ -48,16 +49,24 @@ namespace CoreMechanics
             {
                 var obj = _objectPool.Dequeue();
                 obj.SetActive(true);
+                SetupObject(obj);
                 return obj;
             }
             else
             {
                 var obj = Instantiate(prefab, transform);
+                SetupObject(obj);
                 return obj;
             }
         }
 
-        private void ReturnToPool(GameObject obj)
+        private void SetupObject(GameObject obj)
+        {
+            var e = obj.GetComponent<EventTrigger>();
+            e.Setup(this, eventTypes[Random.Range(0, eventTypes.Count)]);
+        }
+
+        public void ReturnToPool(GameObject obj)
         {
             obj.SetActive(false);
             _objectPool.Enqueue(obj);
