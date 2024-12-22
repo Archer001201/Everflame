@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CoreMechanics.EventScripts;
 using UnityEngine;
-using UnityEngine.Serialization;
+using Utilities;
 using Random = UnityEngine.Random;
 
 namespace CoreMechanics
@@ -13,15 +14,25 @@ namespace CoreMechanics
         public float radius;
         public Vector2 range;
         public int poolSize = 10;
-        public List<EventType> eventTypes;
-
+        public GameManager gameManager;
+        public List<EventStruct> period1Events;
+        public List<EventStruct> period2Events;
+        public List<EventStruct> period3Events;
+        public List<EventStruct> period4Events;
+        public List<EventStruct> currentEvents;
+        public Material matCrisis;
+        public Material matTask;
+        public Material matOpportunity;
+        
         private Queue<GameObject> _objectPool;
 
         private void Awake()
         {
+            gameManager.SetEventGenerator(this);
+            UpdateEventList();
             InitializeObjectPool();
         }
-
+        
         private void OnEnable()
         {
             StartCoroutine(SpawnPrefab());
@@ -31,7 +42,7 @@ namespace CoreMechanics
         {
             StopAllCoroutines();
         }
-
+        
         private void InitializeObjectPool()
         {
             _objectPool = new Queue<GameObject>();
@@ -42,36 +53,30 @@ namespace CoreMechanics
                 _objectPool.Enqueue(obj);
             }
         }
-
+        
         private GameObject GetPooledObject()
         {
             if (_objectPool.Count > 0)
             {
                 var obj = _objectPool.Dequeue();
                 obj.SetActive(true);
-                SetupObject(obj);
+                SetupObject(obj, currentEvents[Random.Range(0, currentEvents.Count)]);
                 return obj;
             }
             else
             {
                 var obj = Instantiate(prefab, transform);
-                SetupObject(obj);
+                SetupObject(obj, currentEvents[Random.Range(0, currentEvents.Count)]);
                 return obj;
             }
         }
-
-        private void SetupObject(GameObject obj)
-        {
-            var e = obj.GetComponent<EventTrigger>();
-            e.Setup(this, eventTypes[Random.Range(0, eventTypes.Count)]);
-        }
-
+        
         public void ReturnToPool(GameObject obj)
         {
             obj.SetActive(false);
             _objectPool.Enqueue(obj);
         }
-
+        
         private IEnumerator SpawnPrefab()
         {
             while (true)
@@ -84,6 +89,42 @@ namespace CoreMechanics
                 instance.transform.rotation = Quaternion.identity;
             }
             // ReSharper disable once IteratorNeverReturns
+        }
+
+        private void UpdateEventList()
+        {
+            currentEvents.Clear();
+            switch (gameManager.currentPeriod)
+            {
+                case CivilPeriod.混元纪: currentEvents.AddRange(period1Events); break;
+                case CivilPeriod.起承纪: currentEvents.AddRange(period2Events); break;
+                case CivilPeriod.黎明纪: currentEvents.AddRange(period3Events); break;
+                case CivilPeriod.星辉纪: currentEvents.AddRange(period4Events); break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
+        private void SetupObject(GameObject obj, EventStruct eventStruct)
+        {
+            BaseDevelopmentalEvent e = eventStruct.eventName switch
+            {
+                "事件1" => obj.AddComponent<事件1>(),
+                "事件2" => obj.AddComponent<事件2>(),
+                _ => null
+            };
+
+            if (e == null) return;
+            
+            e.Setup(this, eventStruct);
+            switch (eventStruct.eventType)
+            {
+                case EventType.危机: e.SetMaterial(matCrisis); break;
+                case EventType.任务: e.SetMaterial(matTask); break;
+                case EventType.机遇: e.SetMaterial(matOpportunity); break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

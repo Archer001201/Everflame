@@ -1,0 +1,54 @@
+{
+    "name": "InputControls",
+    "maps": [
+        {
+            "name": "Play",
+            "id": "a310a24b-b77a-4bdb-9709-ed8ba38c4c5a",
+            "actions": [
+                {
+                    "name": "UseAbility",
+                    "type": "Button",
+                    "id": "340d83fc-8b99-4e77-8b28-c5e7b155abf9",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchAbility",
+                    "type": "Value",
+                    "id": "756b04b3-ad70-4173-aed8-f3b7c67636b1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a05b84dd-869e-4327-9d65-232289b538d7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f711663-53d1-440a-a3e5-dfcbbc5c2936",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchAbility",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

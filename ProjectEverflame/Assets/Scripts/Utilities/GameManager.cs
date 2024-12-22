@@ -1,5 +1,6 @@
 using System;
 using CoreMechanics;
+using Player;
 using Ui;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -23,10 +24,19 @@ namespace Utilities
 
         private UiManager _uiManager;
         private DisasterGenerator _disasterGenerator;
+        private EventGenerator _eventGenerator;
+        private Thruster _thruster;
+        private Teleport _teleport;
 
         private void Awake()
         {
             levelUpExp = CalculateLevelUpExp(level);
+        }
+
+        private void Start()
+        {
+            _thruster = GameObject.FindWithTag("Player").GetComponent<Thruster>();
+            _teleport = GameObject.FindWithTag("Player").GetComponent<Teleport>();
         }
 
         private void HandleLevel(bool levelUp)
@@ -34,7 +44,7 @@ namespace Utilities
             if (levelUp)
             {
                 level++;
-                prosperity += 100;
+                prosperity += 50;
                 // Debug.Log("health: " + health);
             }
             else level--;
@@ -62,7 +72,11 @@ namespace Utilities
 
         public void HandleNatureExp(int exp, bool additive)
         {
-            if (additive) natureExp += exp;
+            if (additive)
+            {
+                natureExp += exp;
+                if (_thruster.enabled) _thruster.Charging(exp);
+            }
             else natureExp -= exp;
             
             HandleLevelExp();
@@ -74,7 +88,11 @@ namespace Utilities
         
         public void HandleScienceExp(int exp, bool additive)
         {
-            if (additive) scienceExp += exp;
+            if (additive)
+            {
+                scienceExp += exp;
+                _teleport.Charging(scienceExp);
+            }
             else scienceExp -= exp;
             
             HandleLevelExp();
@@ -121,6 +139,11 @@ namespace Utilities
         public void SetDisasterGenerator(DisasterGenerator generator)
         {
             _disasterGenerator = generator;
+        }
+
+        public void SetEventGenerator(EventGenerator generator)
+        {
+            _eventGenerator = generator;
         }
     }
 }

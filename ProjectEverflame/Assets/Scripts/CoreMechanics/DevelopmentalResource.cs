@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,14 +10,14 @@ using Random = UnityEngine.Random;
 
 namespace CoreMechanics
 {
-    public enum EventType
+    public enum ResourceType
     {
-        Science, Nature
+        自然, 科技
     }
-    public class EventTrigger : MonoBehaviour
+    public class DevelopmentalResource : MonoBehaviour
     {
         public UnityEvent onPickupEvent;
-        public EventGenerator objectPool;
+        public ResourceGenerator objectPool;
         public float duration = 20f;
         public Material matBlue;
         public Material matGreen;
@@ -32,10 +33,10 @@ namespace CoreMechanics
             _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         }
 
-        private void Start()
-        {
-            _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        }
+        // private void Start()
+        // {
+        //     _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        // }
 
         private void OnEnable()
         {
@@ -56,24 +57,26 @@ namespace CoreMechanics
             objectPool.ReturnToPool(gameObject);
         }
 
-        public void Setup(EventGenerator pool, EventType type)
+        public void Setup(ResourceGenerator pool, ResourceType type)
         {
             objectPool = pool;
 
             switch (type)
             {
-                case EventType.Science:
+                case ResourceType.科技:
                     _meshRenderer.material = matBlue;
                     var valSc = RandomValue();
                     _nameTmp.text = type + " " + valSc;
                     onPickupEvent.AddListener(() => _gameManager.HandleScienceExp(valSc, true));
                     break;
-                case EventType.Nature:
+                case ResourceType.自然:
                     _meshRenderer.material = matGreen;
                     var valNa = RandomValue();
                     _nameTmp.text = type + " " + valNa;
                     onPickupEvent.AddListener(() => _gameManager.HandleNatureExp(valNa, true));
                     break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
 

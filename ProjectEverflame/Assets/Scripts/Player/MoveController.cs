@@ -1,3 +1,4 @@
+using Ui;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,8 +8,10 @@ namespace Player
     public class MoveController : MonoBehaviour
     {
         public LayerMask groundLayer;
+        public LayerMask eventLayer;
         private NavMeshAgent _agent;
         private Camera _camera;
+        private UiManager _uiManager;
 
         private void Awake()
         {
@@ -18,13 +21,30 @@ namespace Player
 
         private void Update()
         {
-            if (!Input.GetMouseButtonDown(0)) return;
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
+            
+            if (Physics.Raycast(ray, out var hit2, Mathf.Infinity, eventLayer))
+            {
+                if (hit2.collider.gameObject == _uiManager.eventObject) return;
+                _uiManager.UpdateEventPanel(hit2.collider.gameObject);
+            }
+            else
+            {
+                if (_uiManager.eventObject) _uiManager.UpdateEventPanel(null);
+            }
+            
+            
+            if (!Input.GetMouseButtonDown(0)) return;
             
             if (Physics.Raycast(ray, out var hit, Mathf.Infinity, groundLayer))
             {
                 _agent.SetDestination(hit.point);
             }
+        }
+
+        public void SetUiManager(UiManager manager)
+        {
+            _uiManager = manager;
         }
     }
 }
