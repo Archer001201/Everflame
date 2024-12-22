@@ -1,3 +1,5 @@
+using System;
+using Ui;
 using UnityEngine;
 
 namespace Utilities
@@ -12,9 +14,17 @@ namespace Utilities
         public CivilPeriod currentPeriod = CivilPeriod.混元纪;
         public int health = 100;
         public int levelExp;
+        public int levelUpExp;
         public int natureExp;
         public int scienceExp;
         public float trendRatio;
+
+        private UiManager _uiManager;
+
+        private void Awake()
+        {
+            levelUpExp = CalculateLevelUpExp(level);
+        }
 
         private void HandleLevel(bool levelUp)
         {
@@ -22,9 +32,11 @@ namespace Utilities
             {
                 level++;
                 health += 100;
-                Debug.Log("health: " + health);
+                // Debug.Log("health: " + health);
             }
             else level--;
+            
+            levelUpExp = CalculateLevelUpExp(level);
             
             currentPeriod = level switch
             {
@@ -43,7 +55,8 @@ namespace Utilities
             HandleLevelExp();
             CalculateTrendRatio();
             
-            Debug.Log("Level: " + level + ", Science: " + scienceExp + ", Nature: " + natureExp + ", Trend: " + trendRatio);
+            _uiManager.UpdateUiElements();
+            // Debug.Log("Level: " + level + ", Science: " + scienceExp + ", Nature: " + natureExp + ", Trend: " + trendRatio);
         }
         
         public void HandleScienceExp(int exp, bool additive)
@@ -54,36 +67,42 @@ namespace Utilities
             HandleLevelExp();
             CalculateTrendRatio();
             
-            Debug.Log("Level: " + level + ", Science: " + scienceExp + ", Nature: " + natureExp + ", Trend: " + trendRatio);
+            _uiManager.UpdateUiElements();
+            // Debug.Log("Level: " + level + ", Science: " + scienceExp + ", Nature: " + natureExp + ", Trend: " + trendRatio);
         }
 
         private void HandleLevelExp()
         {
             levelExp = scienceExp + natureExp;
-            
-            var nextLevelExp = 0;
-            for (var i = 1; i <= level; i++)
-            {
-                var para = i / 5 + 1;
-                nextLevelExp += 5 * para + (para + 1) * (i - para);
-            }
-            
-            var previousLevelExp = 0;
-            for (var i = 1; i < level; i++)
-            {
-                var para = i / 5 + 1;
-                previousLevelExp += 5 * para + (para + 1) * (i - para);
-            }
+
+            var nextLevelExp = CalculateLevelUpExp(level);
+            var previousLevelExp = CalculateLevelUpExp(level - 1);
             
             if (levelExp >= nextLevelExp) HandleLevel(true);
             else if (levelExp < previousLevelExp) HandleLevel(false);
             
-            Debug.Log("Exp: " + levelExp + ", Next: " + nextLevelExp + ", Previous: " + previousLevelExp);
+            // Debug.Log("Exp: " + levelExp + ", Next: " + nextLevelExp + ", Previous: " + previousLevelExp);
+        }
+
+        private static int CalculateLevelUpExp(int targetLevel)
+        {
+            var exp = 3;
+            for (var i = 1; i <= targetLevel; i++)
+            {
+                var para = i / 5 + 1;
+                exp += 2 * para + (para + 1) * (i - para);
+            }
+            return exp;
         }
 
         private void CalculateTrendRatio()
         {
             trendRatio = (float)scienceExp / levelExp;
+        }
+
+        public void SetUiManager(UiManager manager)
+        {
+            _uiManager = manager;
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace CoreMechanics
@@ -10,7 +11,7 @@ namespace CoreMechanics
     {
         public GameObject prefab;
         public float radius;
-        public Vector2 interval;
+        public Vector2 range;
         public float duration = 15f;
         public int poolSize = 10;
         public List<EventType> eventTypes;
@@ -76,7 +77,7 @@ namespace CoreMechanics
         {
             while (true)
             {
-                var delay = Random.Range(interval.x, interval.y);
+                var delay = Random.Range(range.x, range.y);
                 yield return new WaitForSeconds(delay);
                 var randomPosition = transform.position + new Vector3(Random.insideUnitCircle.x * radius, 0, Random.insideUnitCircle.y * radius);
                 var instance = GetPooledObject();
