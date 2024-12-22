@@ -12,7 +12,6 @@ namespace CoreMechanics
         public GameObject prefab;
         public float radius;
         public Vector2 range;
-        public float duration = 15f;
         public int poolSize = 10;
         public List<EventType> eventTypes;
 
@@ -83,16 +82,8 @@ namespace CoreMechanics
                 var instance = GetPooledObject();
                 instance.transform.position = randomPosition;
                 instance.transform.rotation = Quaternion.identity;
-                
-                StartCoroutine(ReturnObjectAfterTime(instance, duration));
             }
             // ReSharper disable once IteratorNeverReturns
-        }
-
-        private IEnumerator ReturnObjectAfterTime(GameObject obj, float time)
-        {
-            yield return new WaitForSeconds(time);
-            ReturnToPool(obj);
         }
     }
 }

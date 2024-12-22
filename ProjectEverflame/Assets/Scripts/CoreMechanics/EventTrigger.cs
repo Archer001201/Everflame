@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace CoreMechanics
     {
         public UnityEvent onPickupEvent;
         public EventGenerator objectPool;
+        public float duration = 20f;
         public Material matBlue;
         public Material matGreen;
         
@@ -35,10 +37,16 @@ namespace CoreMechanics
             _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
         }
 
+        private void OnEnable()
+        {
+            StartCoroutine(ReturnObjectAfterTime(duration));
+        }
+
         private void OnDisable()
         {
             onPickupEvent.RemoveAllListeners();
             objectPool = null;
+            StopAllCoroutines();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -87,6 +95,12 @@ namespace CoreMechanics
             };
             
             return Random.Range(minVal, maxVal+1);
+        }
+        
+        private IEnumerator ReturnObjectAfterTime(float time)
+        {
+            yield return new WaitForSeconds(time);
+            objectPool.ReturnToPool(gameObject);
         }
     }
 }

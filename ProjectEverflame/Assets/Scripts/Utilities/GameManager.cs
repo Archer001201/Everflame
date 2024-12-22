@@ -1,6 +1,8 @@
 using System;
+using CoreMechanics;
 using Ui;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Utilities
 {
@@ -12,7 +14,7 @@ namespace Utilities
     {
         public int level = 1;
         public CivilPeriod currentPeriod = CivilPeriod.混元纪;
-        public int health = 100;
+        public int prosperity = 100;
         public int levelExp;
         public int levelUpExp;
         public int natureExp;
@@ -20,6 +22,7 @@ namespace Utilities
         public float trendRatio;
 
         private UiManager _uiManager;
+        private DisasterGenerator _disasterGenerator;
 
         private void Awake()
         {
@@ -31,7 +34,7 @@ namespace Utilities
             if (levelUp)
             {
                 level++;
-                health += 100;
+                prosperity += 100;
                 // Debug.Log("health: " + health);
             }
             else level--;
@@ -45,6 +48,16 @@ namespace Utilities
                 < 16 => CivilPeriod.黎明纪,
                 _ => CivilPeriod.星辉纪
             };
+            
+            _disasterGenerator.UpdateDisasterList();
+        }
+
+        public void HandleProsperity(int val, bool additive)
+        {
+            if (additive) prosperity += val;
+            else prosperity -= val;
+            
+            _uiManager.UpdateUiElements();
         }
 
         public void HandleNatureExp(int exp, bool additive)
@@ -103,6 +116,11 @@ namespace Utilities
         public void SetUiManager(UiManager manager)
         {
             _uiManager = manager;
+        }
+
+        public void SetDisasterGenerator(DisasterGenerator generator)
+        {
+            _disasterGenerator = generator;
         }
     }
 }
