@@ -5,7 +5,11 @@ using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 using Utilities;
+using EventType = CoreMechanics.EventType;
+
+// ReSharper disable PossibleLossOfFraction
 
 namespace Ui
 {
@@ -20,10 +24,12 @@ namespace Ui
         public TextMeshProUGUI healthText;
         public TextMeshProUGUI natureText;
         public TextMeshProUGUI scienceText;
-        public TextMeshProUGUI trendText;
+        // public TextMeshProUGUI trendText;
         public TextMeshProUGUI alarmText;
         public TextMeshProUGUI thrusterText;
         public TextMeshProUGUI portalText;
+        public Image trendImage;
+        public Image expImage;
         
         [Header("Disaster Panel")]
         public GameObject disasterPanel;
@@ -33,6 +39,7 @@ namespace Ui
         [Header("Event Panel")]
         public GameObject eventPanel;
         public TextMeshProUGUI eNameText;
+        public TextMeshProUGUI eEffectText;
         public TextMeshProUGUI eDescriptionText;
         public GameObject eventObject;
 
@@ -50,12 +57,19 @@ namespace Ui
         public void UpdateUiElements()
         {
             periodText.text = gameManager.currentPeriod.ToString();
-            levelText.text = "等级：" + gameManager.level;
+            // levelText.text = "等级：" + gameManager.level;
             levelExpText.text = "经验：" + gameManager.levelExp + " 下一级经验：" + gameManager.levelUpExp;
             healthText.text = "繁荣：" + gameManager.prosperity;
-            natureText.text = "自然：" + gameManager.natureExp;
-            scienceText.text = "科学：" + gameManager.scienceExp;
-            trendText.text = "趋势：" + gameManager.trendRatio;
+            // natureText.text = "<sprite name=leaf> " + gameManager.natureExp;
+            natureText.text = $"<sprite name=leaf> {(int)gameManager.natureExp}";
+            scienceText.text = $"<sprite name=settings> {(int)gameManager.scienceExp}";
+            // trendText.text = "趋势：" + gameManager.trendRatio;
+            trendImage.fillAmount = gameManager.trendRatio;
+            
+            float num1 = gameManager.levelExp - gameManager.currentPeriodExp;
+            float num2 = gameManager.nextPeriodExp - gameManager.currentPeriodExp;
+            // expImage.fillAmount = (gameManager.level%4-1)*0.25f + gameManager.levelExp/gameManager.levelUpExp * 0.25f;
+            expImage.fillAmount = num1 / num2;
         }
 
         public void UpdateAlarmText(int time)
@@ -80,19 +94,29 @@ namespace Ui
             
             eventObject = obj;
             var e = eventObject.GetComponent<BaseDevelopmentalEvent>();
+            var c = e.eventStruct.eventType switch
+            {
+                EventType.危机 => Color.red,
+                EventType.任务 => Color.cyan,
+                EventType.机遇 => Color.yellow,
+                _ => throw new ArgumentOutOfRangeException()
+            };
             eNameText.text = e.eventStruct.eventName;
+            eNameText.color = c;
+            eEffectText.text = e.eventStruct.effect;
+            eEffectText.color = c;
             eDescriptionText.text = e.eventStruct.description;
             eventPanel.SetActive(true);
         }
 
-        public void UpdateThruster(int val)
+        public void UpdateThruster(float val)
         {
-            thrusterText.text = "推进器充能：" + val + "/10";
+            thrusterText.text = "推进器充能：" + (int)val + "/10";
         }
 
-        public void UpdatePortal(int val)
+        public void UpdatePortal(float val)
         {
-            portalText.text = "传送门充能：" + val + "/20";
+            portalText.text = "传送门充能：" + (int)val + "/20";
         }
     }
 }

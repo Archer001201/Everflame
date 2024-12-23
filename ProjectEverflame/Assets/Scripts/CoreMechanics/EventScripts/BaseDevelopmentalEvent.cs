@@ -1,4 +1,5 @@
 using System.Collections;
+using Player;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,7 +14,9 @@ namespace CoreMechanics.EventScripts
         public float duration = 20f;
         public EventStruct eventStruct;
         
-        private GameManager _gameManager;
+        protected GameManager gameManager;
+        private TaskManager _taskManager;
+        private GameObject _player;
         private MeshRenderer _meshRenderer;
         private TextMeshProUGUI _nameTmp;
         
@@ -21,7 +24,8 @@ namespace CoreMechanics.EventScripts
         {
             _meshRenderer = GetComponent<MeshRenderer>();
             _nameTmp = GetComponentInChildren<TextMeshProUGUI>();
-            _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+            _taskManager = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<TaskManager>();
         }
         
         private void OnEnable()
@@ -40,6 +44,7 @@ namespace CoreMechanics.EventScripts
         private void OnTriggerEnter(Collider other)
         {
             if (!other.gameObject.CompareTag("Player")) return;
+            _player = other.gameObject;
             onPickupEvent?.Invoke();
             objectPool.ReturnToPool(gameObject);
         }
@@ -64,5 +69,21 @@ namespace CoreMechanics.EventScripts
         }
 
         protected virtual void Pickup(){}
+
+        // ReSharper disable Unity.PerformanceAnalysis
+        protected void ChangePlayerSpeed(float rate, float time)
+        {
+            _player.GetComponent<MoveController>().StartChangeSpeed(rate, time);
+        }
+
+        protected void StartTask(IEnumerator task)
+        {
+            _taskManager.StartTask(task);
+        }
+
+        protected virtual IEnumerator Task()
+        {
+            yield return null;
+        }
     }
 }

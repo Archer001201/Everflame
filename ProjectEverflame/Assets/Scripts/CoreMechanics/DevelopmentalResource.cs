@@ -84,7 +84,7 @@ namespace CoreMechanics
         {
             var maxVal = _gameManager.currentPeriod switch
             {
-                CivilPeriod.起承纪 => 5,
+                CivilPeriod.启程纪 => 5,
                 CivilPeriod.黎明纪 => 7,
                 CivilPeriod.星辉纪 => 9,
                 _ => 3

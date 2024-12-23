@@ -1,3 +1,4 @@
+using System.Collections;
 using Ui;
 using UnityEngine;
 using UnityEngine.AI;
@@ -45,6 +46,18 @@ namespace Player
         public void SetUiManager(UiManager manager)
         {
             _uiManager = manager;
+        }
+
+        private IEnumerator ChangeSpeed(float rate, float time)
+        {
+            _agent.speed *= rate;
+            yield return new WaitForSeconds(time);
+            _agent.speed /= rate;
+        }
+
+        public void StartChangeSpeed(float rate, float time)
+        {
+            StartCoroutine(ChangeSpeed(rate, time));
         }
     }
 }

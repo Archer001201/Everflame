@@ -9,18 +9,20 @@ namespace Utilities
 {
     public enum CivilPeriod
     {
-        混元纪, 起承纪, 黎明纪, 星辉纪,
+        荒原纪, 启程纪, 黎明纪, 星辉纪,
     }
     public class GameManager : MonoBehaviour
     {
         public int level = 1;
-        public CivilPeriod currentPeriod = CivilPeriod.混元纪;
-        public int prosperity = 100;
-        public int levelExp;
-        public int levelUpExp;
-        public int natureExp;
-        public int scienceExp;
-        public float trendRatio;
+        public CivilPeriod currentPeriod = CivilPeriod.荒原纪;
+        public float prosperity = 100;
+        public float levelExp;
+        public float levelUpExp;
+        public float natureExp;
+        public float scienceExp;
+        public float trendRatio = 0.5f;
+        public float nextPeriodExp = 100;
+        public float currentPeriodExp; 
 
         private UiManager _uiManager;
         private DisasterGenerator _disasterGenerator;
@@ -31,6 +33,7 @@ namespace Utilities
         private void Awake()
         {
             levelUpExp = CalculateLevelUpExp(level);
+            nextPeriodExp = CalculateLevelUpExp(((int)(level / 5) + 1) * 4);
         }
 
         private void Start()
@@ -50,19 +53,21 @@ namespace Utilities
             else level--;
             
             levelUpExp = CalculateLevelUpExp(level);
+            currentPeriodExp = level > 4 ? CalculateLevelUpExp((int)(level / 5) * 4) : 0;
+            nextPeriodExp = CalculateLevelUpExp(((int)(level / 5) + 1) * 4);
             
             currentPeriod = level switch
             {
-                < 6 => CivilPeriod.混元纪,
-                < 11 => CivilPeriod.起承纪,
-                < 16 => CivilPeriod.黎明纪,
+                < 5 => CivilPeriod.荒原纪,
+                < 9 => CivilPeriod.启程纪,
+                < 13 => CivilPeriod.黎明纪,
                 _ => CivilPeriod.星辉纪
             };
             
             _disasterGenerator.UpdateDisasterList();
         }
 
-        public void HandleProsperity(int val, bool additive)
+        public void HandleProsperity(float val, bool additive)
         {
             if (additive) prosperity += val;
             else prosperity -= val;
@@ -70,7 +75,7 @@ namespace Utilities
             _uiManager.UpdateUiElements();
         }
 
-        public void HandleNatureExp(int exp, bool additive)
+        public void HandleNatureExp(float exp, bool additive)
         {
             if (additive)
             {
@@ -86,7 +91,7 @@ namespace Utilities
             // Debug.Log("Level: " + level + ", Science: " + scienceExp + ", Nature: " + natureExp + ", Trend: " + trendRatio);
         }
         
-        public void HandleScienceExp(int exp, bool additive)
+        public void HandleScienceExp(float exp, bool additive)
         {
             if (additive)
             {

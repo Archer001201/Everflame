@@ -639,6 +639,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   objectPool: {fileID: 0}
-  duration: 20
+  duration: 30
   matBlue: {fileID: 2100000, guid: 08eb8aa191ffa425a8c9d72d5d1b29e4, type: 2}
   matGreen: {fileID: 2100000, guid: 3147d51d699974b848731f7f688e54c8, type: 2}

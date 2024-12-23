@@ -7,11 +7,6 @@ namespace CoreMechanics
     {
         危机, 机遇, 任务
     }
-
-    public enum EventName
-    {
-        事件1, 事件2, 事件3
-    }
     
     [Serializable]
     public class EventStruct
@@ -19,5 +14,6 @@ namespace CoreMechanics
         public string eventName;
         public EventType eventType;
         [TextArea] public string description;
+        [TextArea] public string effect;
     }
 }

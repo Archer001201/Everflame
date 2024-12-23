@@ -9,7 +9,7 @@ namespace Player
     {
         public GameObject portalPrefab;         // 传送门预制体
         public int maxPortals = 2;              // 最大传送门数量
-        public int charge = 20;
+        public float charge = 20;
         
         private Queue<GameObject> _portalPool;  // 传送门对象池
         private InputControls _controls;
@@ -73,7 +73,7 @@ namespace Player
             _uiManager = uiManager;
         }
 
-        public void Charging(int val)
+        public void Charging(float val)
         {
             charge += val;
             charge = Mathf.Clamp(charge, 0, 20);

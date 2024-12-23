@@ -96,8 +96,8 @@ namespace CoreMechanics
             currentEvents.Clear();
             switch (gameManager.currentPeriod)
             {
-                case CivilPeriod.混元纪: currentEvents.AddRange(period1Events); break;
-                case CivilPeriod.起承纪: currentEvents.AddRange(period2Events); break;
+                case CivilPeriod.荒原纪: currentEvents.AddRange(period1Events); break;
+                case CivilPeriod.启程纪: currentEvents.AddRange(period2Events); break;
                 case CivilPeriod.黎明纪: currentEvents.AddRange(period3Events); break;
                 case CivilPeriod.星辉纪: currentEvents.AddRange(period4Events); break;
                 default:
@@ -109,8 +109,9 @@ namespace CoreMechanics
         {
             BaseDevelopmentalEvent e = eventStruct.eventName switch
             {
-                "事件1" => obj.AddComponent<事件1>(),
-                "事件2" => obj.AddComponent<事件2>(),
+                "逐影灾厄" => obj.AddComponent<逐影灾厄>(),
+                "幻菇迷狂" => obj.AddComponent<幻菇迷狂>(),
+                "草药寻踪" => obj.AddComponent<草药寻踪>(),
                 _ => null
             };
 

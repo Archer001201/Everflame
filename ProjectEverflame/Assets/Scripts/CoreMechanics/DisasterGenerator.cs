@@ -68,8 +68,8 @@ namespace CoreMechanics
             currentDisasters.AddRange(universalDisasters);
             switch (gameManager.currentPeriod)
             {
-                case CivilPeriod.混元纪: currentDisasters.AddRange(period1Disasters); break;
-                case CivilPeriod.起承纪: currentDisasters.AddRange(period2Disasters); break;
+                case CivilPeriod.荒原纪: currentDisasters.AddRange(period1Disasters); break;
+                case CivilPeriod.启程纪: currentDisasters.AddRange(period2Disasters); break;
                 case CivilPeriod.黎明纪: currentDisasters.AddRange(period3Disasters); break;
                 case CivilPeriod.星辉纪: currentDisasters.AddRange(period4Disasters); break;
                 default:

@@ -10,7 +10,7 @@ namespace Player
     {
         public float dashForce = 10f;       
         public float dashDuration = 0.3f;  
-        public int charge = 10;
+        public float charge = 10;
 
         private Rigidbody _rb;
         private NavMeshAgent _agent;
@@ -78,7 +78,7 @@ namespace Player
             _agent.SetDestination(_targetDestination);
         }
 
-        public void Charging(int val)
+        public void Charging(float val)
         {
             charge += val;
             charge = Mathf.Clamp(charge, 0, 10);
