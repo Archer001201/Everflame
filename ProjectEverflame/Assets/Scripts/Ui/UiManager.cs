@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CoreMechanics;
 using CoreMechanics.EventScripts;
+using CoreMechanics.TaskScripts;
 using Player;
 using TMPro;
 using UnityEngine;
@@ -128,18 +129,24 @@ namespace Ui
             portalText.text = "传送门充能：" + (int)val + "/20";
         }
 
-        public void CreateTask(IEnumerator task, EventStruct eventStruct, float time)
+        public void CreateTask(EventStruct eventStruct, TaskType type, float time)
         {
             if (taskPanel.transform.childCount > 2)
             {
                 Debug.Log("task list is full");
                 return;
             }
-            StartCoroutine(task);
             var obj = Instantiate(taskPrefab, taskPanel.transform);
-            var t = obj.GetComponent<TaskPanel>();
-            t.UpdateTaskText(eventStruct.effect);
-            t.StartTask(time);
+
+            switch (type)
+            {
+                case TaskType.自然采集初级: obj.AddComponent<自然采集初级>(); break;
+                case TaskType.追逐珍宝初级: obj.AddComponent<追逐珍宝初级>(); break;
+            }
+            
+            var p = obj.GetComponent<TaskPanel>();
+            p.UpdateTaskText(eventStruct.effect);
+            p.StartTask(time);
         }
     }
 }

@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 namespace Ui
 {
+    public enum TaskType
+    {
+        自然采集初级, 追逐珍宝初级
+    }
+    
     public class TaskPanel : MonoBehaviour
     {
         public TextMeshProUGUI taskText;

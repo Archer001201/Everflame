@@ -79,15 +79,10 @@ namespace CoreMechanics.EventScripts
             _player.GetComponent<MoveController>().StartChangeSpeed(rate, time);
         }
 
-        protected void StartTask(float time)
+        protected void StartTask(TaskType type, float time)
         {
             // _taskManager.StartTask(this, time);
-            _uiManager.CreateTask(Task(), eventStruct, time);
-        }
-
-        public virtual IEnumerator Task()
-        {
-            yield return null;
+            _uiManager.CreateTask(eventStruct, type, time);
         }
     }
 }

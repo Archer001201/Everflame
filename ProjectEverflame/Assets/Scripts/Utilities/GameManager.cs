@@ -81,6 +81,7 @@ namespace Utilities
             {
                 natureExp += exp;
                 if (_thruster.enabled) _thruster.Charging(exp);
+                EventHandler.CollectNatureResource(exp);
             }
             else natureExp -= exp;
             

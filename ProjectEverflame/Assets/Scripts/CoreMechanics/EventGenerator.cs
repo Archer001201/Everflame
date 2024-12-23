@@ -112,6 +112,7 @@ namespace CoreMechanics
                 "逐影灾厄" => obj.AddComponent<逐影灾厄>(),
                 "幻菇迷狂" => obj.AddComponent<幻菇迷狂>(),
                 "草药寻踪" => obj.AddComponent<草药寻踪>(),
+                "流火珍宝" => obj.AddComponent<流火珍宝>(),
                 _ => null
             };
 
