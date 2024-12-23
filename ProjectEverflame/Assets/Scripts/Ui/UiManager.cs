@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using CoreMechanics;
 using CoreMechanics.EventScripts;
 using Player;
@@ -42,6 +44,11 @@ namespace Ui
         public TextMeshProUGUI eEffectText;
         public TextMeshProUGUI eDescriptionText;
         public GameObject eventObject;
+        
+        [Header("Task Panel")]
+        public GameObject taskPanel;
+        public GameObject taskPrefab;
+        private TaskManager _taskManager;
 
         private void Awake()
         {
@@ -52,6 +59,8 @@ namespace Ui
             GameObject.FindWithTag("Player").GetComponent<MoveController>().SetUiManager(this);
             GameObject.FindWithTag("Player").GetComponent<Thruster>().SetUiManager(this);
             GameObject.FindWithTag("Player").GetComponent<Teleport>().SetUiManager(this);
+            // _taskManager = GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>();
+            // GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>().SetUiManager(this);
         }
 
         public void UpdateUiElements()
@@ -117,6 +126,20 @@ namespace Ui
         public void UpdatePortal(float val)
         {
             portalText.text = "传送门充能：" + (int)val + "/20";
+        }
+
+        public void CreateTask(IEnumerator task, EventStruct eventStruct, float time)
+        {
+            if (taskPanel.transform.childCount > 2)
+            {
+                Debug.Log("task list is full");
+                return;
+            }
+            StartCoroutine(task);
+            var obj = Instantiate(taskPrefab, taskPanel.transform);
+            var t = obj.GetComponent<TaskPanel>();
+            t.UpdateTaskText(eventStruct.effect);
+            t.StartTask(time);
         }
     }
 }

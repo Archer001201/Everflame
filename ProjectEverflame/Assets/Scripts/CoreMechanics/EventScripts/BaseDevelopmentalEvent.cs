@@ -1,6 +1,7 @@
 using System.Collections;
 using Player;
 using TMPro;
+using Ui;
 using UnityEngine;
 using UnityEngine.Events;
 using Utilities;
@@ -15,7 +16,7 @@ namespace CoreMechanics.EventScripts
         public EventStruct eventStruct;
         
         protected GameManager gameManager;
-        private TaskManager _taskManager;
+        private UiManager _uiManager;
         private GameObject _player;
         private MeshRenderer _meshRenderer;
         private TextMeshProUGUI _nameTmp;
@@ -25,7 +26,7 @@ namespace CoreMechanics.EventScripts
             _meshRenderer = GetComponent<MeshRenderer>();
             _nameTmp = GetComponentInChildren<TextMeshProUGUI>();
             gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-            _taskManager = GameObject.FindGameObjectWithTag("TaskManager").GetComponent<TaskManager>();
+            _uiManager = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<UiManager>();
         }
         
         private void OnEnable()
@@ -46,9 +47,8 @@ namespace CoreMechanics.EventScripts
             if (!other.gameObject.CompareTag("Player")) return;
             _player = other.gameObject;
             onPickupEvent?.Invoke();
-            objectPool.ReturnToPool(gameObject);
         }
-        
+
         private IEnumerator ReturnObjectAfterTime(float time)
         {
             yield return new WaitForSeconds(time);
@@ -68,7 +68,10 @@ namespace CoreMechanics.EventScripts
             _meshRenderer.material = material;
         }
 
-        protected virtual void Pickup(){}
+        protected virtual void Pickup()
+        {
+            objectPool.ReturnToPool(gameObject);
+        }
 
         // ReSharper disable Unity.PerformanceAnalysis
         protected void ChangePlayerSpeed(float rate, float time)
@@ -76,12 +79,13 @@ namespace CoreMechanics.EventScripts
             _player.GetComponent<MoveController>().StartChangeSpeed(rate, time);
         }
 
-        protected void StartTask(IEnumerator task)
+        protected void StartTask(float time)
         {
-            _taskManager.StartTask(task);
+            // _taskManager.StartTask(this, time);
+            _uiManager.CreateTask(Task(), eventStruct, time);
         }
 
-        protected virtual IEnumerator Task()
+        public virtual IEnumerator Task()
         {
             yield return null;
         }

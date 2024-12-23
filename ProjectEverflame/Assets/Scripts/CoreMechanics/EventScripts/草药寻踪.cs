@@ -5,18 +5,18 @@ namespace CoreMechanics.EventScripts
 {
     public class 草药寻踪 : BaseDevelopmentalEvent
     {
+        private const float Duration = 10;
+
         protected override void Pickup()
         {
+            StartTask(Duration);
             base.Pickup();
-            Debug.Log("task picked up");
-            StartTask(Task());
         }
 
-        protected override IEnumerator Task()
+        public override IEnumerator Task()
         {
-            Debug.Log("cao yao xun zong");
-            yield return new WaitForSeconds(3);
-            Debug.Log("task end");
+            yield return new WaitForSeconds(Duration);
+            Debug.Log("...");
         }
     }
 }

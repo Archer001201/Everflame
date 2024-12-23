@@ -1,35 +1,38 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using CoreMechanics;
+using CoreMechanics.EventScripts;
+using Ui;
 using UnityEngine;
 
 namespace Utilities
 {
     public class TaskManager : MonoBehaviour
     {
-        private Coroutine[] _tasks = new Coroutine[3];
-
-        public void StartTask(IEnumerator task)
+        // private List<BaseDevelopmentalEvent> _tasks = new();
+        private UiManager _uiManager;
+        //
+        // public void StartTask(BaseDevelopmentalEvent task, float time)
+        // {
+        //     _tasks.RemoveAll(t => !task || !task.isActiveAndEnabled);
+        //
+        //
+        //     if (_tasks.Count >= 3)
+        //     {
+        //         StopCoroutine(_tasks[0].Task());
+        //         _uiManager.DestroyEarliestTask();
+        //         _tasks.RemoveAt(0);
+        //     }
+        //     
+        //     _tasks.Add(task);
+        //     _uiManager.CreateTask(task.eventStruct, time);
+        //     StartCoroutine(task.Task());
+        // }
+        //
+        public void SetUiManager(UiManager uiManager)
         {
-            var replaceIndex = -1;
-
-            // 检查空槽位
-            for (var i = 0; i < _tasks.Length; i++)
-            {
-                if (_tasks[i] == null)
-                {
-                    replaceIndex = i; // 找到空位
-                    break;
-                }
-            }
-
-            // 如果没有空位，顶替最早任务
-            if (replaceIndex == -1)
-            {
-                replaceIndex = 0; // 顶替第一个任务
-                StopCoroutine(_tasks[replaceIndex]); // 停止旧任务
-            }
-
-            // 启动新任务
-            _tasks[replaceIndex] = StartCoroutine(task);
+            _uiManager = uiManager;
         }
     }
 }
