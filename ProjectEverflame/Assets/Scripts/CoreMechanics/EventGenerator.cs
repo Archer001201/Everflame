@@ -138,6 +138,9 @@ namespace CoreMechanics
                 "丹毒事件" => obj.AddComponent<丹毒事件>(),
                 "风引琉沙" => obj.AddComponent<风引琉沙>(),
                 "烛林秘光" => obj.AddComponent<烛林秘光>(),
+                
+                "蒸汽工潮" => obj.AddComponent<蒸汽工潮>(),
+                "污染之乱" => obj.AddComponent<污染之乱>(),
                 _ => null
             };
 
