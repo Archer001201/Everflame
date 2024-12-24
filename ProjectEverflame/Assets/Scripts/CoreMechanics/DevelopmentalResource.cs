@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using Utilities;
+using EventHandler = Utilities.EventHandler;
 using Random = UnityEngine.Random;
 
 namespace CoreMechanics
@@ -21,6 +22,8 @@ namespace CoreMechanics
         public float duration = 20f;
         public Material matBlue;
         public Material matGreen;
+        public ResourceType resourceType;
+        // public bool destroyed;
         
         private GameManager _gameManager;
         private MeshRenderer _meshRenderer;
@@ -40,13 +43,16 @@ namespace CoreMechanics
 
         private void OnEnable()
         {
+            // destroyed = false;
             StartCoroutine(ReturnObjectAfterTime(duration));
+            EventHandler.onDestroyResource += DestroyedState;
         }
 
         private void OnDisable()
         {
             onPickupEvent.RemoveAllListeners();
             objectPool = null;
+            EventHandler.onDestroyResource -= DestroyedState;
             StopAllCoroutines();
         }
 
@@ -60,6 +66,7 @@ namespace CoreMechanics
         public void Setup(ResourceGenerator pool, ResourceType type)
         {
             objectPool = pool;
+            resourceType = type;
 
             switch (type)
             {
@@ -104,6 +111,11 @@ namespace CoreMechanics
         {
             yield return new WaitForSeconds(time);
             objectPool.ReturnToPool(gameObject);
+        }
+
+        private void DestroyedState(ResourceType type, float time)
+        {
+            if (resourceType == type) objectPool.ReturnToPool(gameObject);
         }
     }
 }

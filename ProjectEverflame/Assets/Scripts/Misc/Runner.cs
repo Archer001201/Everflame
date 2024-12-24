@@ -39,7 +39,7 @@ namespace Misc
             Destroy(gameObject);
         }
 
-        public static Vector3 RandomNavSphere(Vector3 origin, float dist, int layerMask)
+        private static Vector3 RandomNavSphere(Vector3 origin, float dist, int layerMask)
         {
             Vector3 randDirection = Random.insideUnitSphere * dist;
 

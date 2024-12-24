@@ -84,5 +84,18 @@ namespace CoreMechanics.EventScripts
             // _taskManager.StartTask(this, time);
             _uiManager.CreateTask(eventStruct, type, time);
         }
+
+        protected void StartDestroyResources(ResourceType type, float time)
+        {
+            EventHandler.DestroyResource(type, time);
+        }
+
+        // private IEnumerator DestroyResources(ResourceType type, float time)
+        // {
+        //     EventHandler.DestroyResource(type, true);
+        //     yield return new WaitForSeconds(time);
+        //     Debug.Log("end coroutine");
+        //     EventHandler.DestroyResource(type, false);
+        // }
     }
 }

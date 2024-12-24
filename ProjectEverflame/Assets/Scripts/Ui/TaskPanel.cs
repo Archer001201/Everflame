@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,13 @@ namespace Ui
     public class TaskPanel : MonoBehaviour
     {
         public TextMeshProUGUI taskText;
+        public TextMeshProUGUI timerText;
         public Image progressBar;
+
+        private void Awake()
+        {
+            progressBar.fillAmount = 0;
+        }
 
         public void UpdateTaskText(string task)
         { 
@@ -22,19 +29,24 @@ namespace Ui
 
         public void StartTask(float time)
         {
-            StartCoroutine(UpdateProgressBar(time));
+            StartCoroutine(CountDown(time));
         }
 
-        private IEnumerator UpdateProgressBar(float time)
+        private IEnumerator CountDown(float time)
         {
             var timer = time;
             while (timer > 0)
             {
-                progressBar.fillAmount = timer / time;
+                timerText.text = "剩余时间：" + timer + "s";
                 yield return new WaitForSeconds(1);
                 timer -= 1;
             }
             Destroy(gameObject);
+        }
+
+        public void UpdateTaskProgress(float progress)
+        {
+            progressBar.fillAmount = progress;
         }
     }
 }

@@ -25,8 +25,8 @@ namespace Ui
         public TextMeshProUGUI levelText;
         public TextMeshProUGUI levelExpText;
         public TextMeshProUGUI healthText;
-        public TextMeshProUGUI natureText;
-        public TextMeshProUGUI scienceText;
+        // public TextMeshProUGUI natureText;
+        // public TextMeshProUGUI scienceText;
         // public TextMeshProUGUI trendText;
         public TextMeshProUGUI alarmText;
         public TextMeshProUGUI thrusterText;
@@ -71,8 +71,8 @@ namespace Ui
             levelExpText.text = "经验：" + gameManager.levelExp + " 下一级经验：" + gameManager.levelUpExp;
             healthText.text = "繁荣：" + gameManager.prosperity;
             // natureText.text = "<sprite name=leaf> " + gameManager.natureExp;
-            natureText.text = $"<sprite name=leaf> {(int)gameManager.natureExp}";
-            scienceText.text = $"<sprite name=settings> {(int)gameManager.scienceExp}";
+            // natureText.text = $"<sprite name=leaf> {(int)gameManager.natureExp}";
+            // scienceText.text = $"<sprite name=settings> {(int)gameManager.scienceExp}";
             // trendText.text = "趋势：" + gameManager.trendRatio;
             trendImage.fillAmount = gameManager.trendRatio;
             
@@ -84,7 +84,7 @@ namespace Ui
 
         public void UpdateAlarmText(int time)
         {
-            alarmText.text = "未知危机即将到来 " + time + "s";
+            alarmText.text = "即将到来 " + time + "s";
         }
 
         public void UpdateDisasterPanel(DisasterStruct disaster)
