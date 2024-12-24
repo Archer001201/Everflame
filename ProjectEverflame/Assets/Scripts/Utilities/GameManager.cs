@@ -66,6 +66,9 @@ namespace Utilities
                 < 13 => CivilPeriod.黎明纪,
                 _ => CivilPeriod.星辉纪
             };
+
+            _thruster.unlocked = level >= 5;
+            _teleport.unlocked = level >= 13;
             
             _eventGenerator.UpdateEventList();
             _resourceGenerator.UpdateEventList();

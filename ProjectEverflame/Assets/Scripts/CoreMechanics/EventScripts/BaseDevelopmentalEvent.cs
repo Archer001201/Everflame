@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Misc;
 using Player;
 using TMPro;
 using Ui;
@@ -21,6 +22,7 @@ namespace CoreMechanics.EventScripts
         private GameObject _player;
         private MeshRenderer _meshRenderer;
         private TextMeshProUGUI _nameTmp;
+        public BombGenerator bombGenerator;
         
         private void Awake()
         {
@@ -77,7 +79,7 @@ namespace CoreMechanics.EventScripts
         // ReSharper disable Unity.PerformanceAnalysis
         protected void ChangePlayerSpeed(float rate, float time)
         {
-            _player.GetComponent<MoveController>().StartChangeSpeed(rate, time);
+            _player.GetComponent<PlayerController>().StartChangeSpeed(rate, time);
         }
 
         protected void StartTask(TaskType type, float time)
@@ -94,6 +96,11 @@ namespace CoreMechanics.EventScripts
         protected void ActivateMagnet(List<ResourceType> types, float time)
         {
             _player.GetComponentInChildren<Magnet>().StartMagnet(types, time);
+        }
+
+        protected void LaunchBomb(float time, int wave)
+        {
+            bombGenerator.StartSpawn(time, wave);
         }
 
         // private IEnumerator DestroyResources(ResourceType type, float time)

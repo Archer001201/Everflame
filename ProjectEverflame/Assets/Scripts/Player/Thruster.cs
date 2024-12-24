@@ -11,6 +11,7 @@ namespace Player
         public float dashForce = 10f;       
         public float dashDuration = 0.3f;  
         public float charge = 10;
+        public bool unlocked;
 
         private Rigidbody _rb;
         private NavMeshAgent _agent;
@@ -29,7 +30,7 @@ namespace Player
             
             _controls.Play.UseAbility.performed += context =>
             {
-                if (charge < 10) return;
+                if (charge < 10 || !unlocked) return;
                 StartCoroutine(Dash());
                 charge = 0;
                 _uiManager.UpdateThruster(charge);

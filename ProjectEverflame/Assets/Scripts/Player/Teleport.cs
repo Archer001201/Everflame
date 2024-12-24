@@ -10,6 +10,7 @@ namespace Player
         public GameObject portalPrefab;         // 传送门预制体
         public int maxPortals = 2;              // 最大传送门数量
         public float charge = 20;
+        public bool unlocked;
         
         private Queue<GameObject> _portalPool;  // 传送门对象池
         private InputControls _controls;
@@ -43,7 +44,7 @@ namespace Player
         // 放置传送门
         private void PlacePortal()
         {
-            if (charge < 10) return;
+            if (charge < 10 || !unlocked) return;
             charge -= 10;
             _uiManager.UpdatePortal(charge);
             

@@ -33,7 +33,7 @@ namespace CoreMechanics.TaskScripts
         
         protected void ChangePlayerSpeed(float rate, float time)
         {
-            GameObject.FindWithTag("Player").GetComponent<MoveController>().StartChangeSpeed(rate, time);
+            GameObject.FindWithTag("Player").GetComponent<PlayerController>().StartChangeSpeed(rate, time);
         }
         
         protected void StartDestroyResources(ResourceType type, float time)

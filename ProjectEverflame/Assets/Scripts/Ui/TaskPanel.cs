@@ -16,10 +16,16 @@ namespace Ui
         public TextMeshProUGUI taskText;
         public TextMeshProUGUI timerText;
         public Image progressBar;
+        public float progressValue;
 
         private void Awake()
         {
             progressBar.fillAmount = 0;
+        }
+
+        private void Update()
+        {
+            progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, progressValue, 5f * Time.deltaTime);
         }
 
         public void UpdateTaskText(string task)
@@ -46,7 +52,7 @@ namespace Ui
 
         public void UpdateTaskProgress(float progress)
         {
-            progressBar.fillAmount = progress;
+            progressValue = progress;
         }
     }
 }

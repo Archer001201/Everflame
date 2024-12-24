@@ -57,11 +57,18 @@ namespace Ui
             eventPanel.SetActive(false);
             gameManager.SetUiManager(this);
             UpdateUiElements();
-            GameObject.FindWithTag("Player").GetComponent<MoveController>().SetUiManager(this);
+            GameObject.FindWithTag("Player").GetComponent<PlayerController>().SetUiManager(this);
             GameObject.FindWithTag("Player").GetComponent<Thruster>().SetUiManager(this);
             GameObject.FindWithTag("Player").GetComponent<Teleport>().SetUiManager(this);
             // _taskManager = GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>();
             // GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>().SetUiManager(this);
+        }
+
+        private void Update()
+        {
+            float targetFillAmount = gameManager.trendRatio;
+            // 使用 Mathf.Lerp 平滑过渡到目标值
+            trendImage.fillAmount = Mathf.Lerp(trendImage.fillAmount, targetFillAmount, 5f * Time.deltaTime);
         }
 
         public void UpdateUiElements()
@@ -75,7 +82,6 @@ namespace Ui
             // scienceText.text = $"<sprite name=settings> {(int)gameManager.scienceExp}";
             // trendText.text = "趋势：" + gameManager.trendRatio;
             // Debug.Log(gameManager.trendRatio);
-            trendImage.fillAmount = gameManager.trendRatio;
             
             float num1 = gameManager.levelExp - gameManager.currentPeriodExp;
             float num2 = gameManager.nextPeriodExp - gameManager.currentPeriodExp;

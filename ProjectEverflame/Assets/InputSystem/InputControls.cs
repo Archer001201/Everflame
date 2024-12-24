@@ -40,7 +40,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""name"": ""SwitchAbility"",
                     ""type"": ""Value"",
                     ""id"": ""756b04b3-ad70-4173-aed8-f3b7c67636b1"",
-                    ""expectedControlType"": """",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
