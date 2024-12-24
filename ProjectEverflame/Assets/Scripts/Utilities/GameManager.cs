@@ -29,6 +29,7 @@ namespace Utilities
         private EventGenerator _eventGenerator;
         private Thruster _thruster;
         private Teleport _teleport;
+        private ResourceGenerator _resourceGenerator;
 
         private void Awake()
         {
@@ -52,6 +53,8 @@ namespace Utilities
             }
             else level--;
             
+            level = Mathf.Clamp(level, 1, int.MaxValue);
+            
             levelUpExp = CalculateLevelUpExp(level);
             currentPeriodExp = level > 4 ? CalculateLevelUpExp((int)(level / 5) * 4) : 0;
             nextPeriodExp = CalculateLevelUpExp(((int)(level / 5) + 1) * 4);
@@ -64,6 +67,8 @@ namespace Utilities
                 _ => CivilPeriod.星辉纪
             };
             
+            _eventGenerator.UpdateEventList();
+            _resourceGenerator.UpdateEventList();
             _disasterGenerator.UpdateDisasterList();
         }
 
@@ -71,7 +76,7 @@ namespace Utilities
         {
             if (additive) prosperity += val;
             else prosperity -= val;
-            
+            prosperity = Mathf.Clamp(prosperity, 0, float.MaxValue);
             _uiManager.UpdateUiElements();
         }
 
@@ -85,9 +90,11 @@ namespace Utilities
             }
             else natureExp -= exp;
             
+            natureExp = Mathf.Clamp(natureExp, 0, float.MaxValue);
+            
             HandleLevelExp();
             CalculateTrendRatio();
-            
+            // trendRatio = Mathf.Clamp(trendRatio, 0, 1);
             _uiManager.UpdateUiElements();
             // Debug.Log("Level: " + level + ", Science: " + scienceExp + ", Nature: " + natureExp + ", Trend: " + trendRatio);
         }
@@ -101,9 +108,11 @@ namespace Utilities
             }
             else scienceExp -= exp;
             
+            scienceExp = Mathf.Clamp(scienceExp, 0, float.MaxValue);
+            
             HandleLevelExp();
             CalculateTrendRatio();
-            
+            // trendRatio = Mathf.Clamp(trendRatio, 0, 1);
             _uiManager.UpdateUiElements();
             // Debug.Log("Level: " + level + ", Science: " + scienceExp + ", Nature: " + natureExp + ", Trend: " + trendRatio);
         }
@@ -135,6 +144,10 @@ namespace Utilities
         private void CalculateTrendRatio()
         {
             trendRatio = (float)scienceExp / levelExp;
+            if (levelExp == 0) trendRatio = 0.5f;
+            // if (trendRatio < 0) trendRatio = 0;
+            trendRatio = Mathf.Clamp01(trendRatio);
+            // Debug.Log(trendRatio);
         }
 
         public void SetUiManager(UiManager manager)
@@ -150,6 +163,11 @@ namespace Utilities
         public void SetEventGenerator(EventGenerator generator)
         {
             _eventGenerator = generator;
+        }
+
+        public void SetResourceGenerator(ResourceGenerator generator)
+        {
+            _resourceGenerator = generator;
         }
     }
 }

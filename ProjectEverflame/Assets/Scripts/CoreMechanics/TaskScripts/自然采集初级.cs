@@ -9,7 +9,7 @@ namespace CoreMechanics.TaskScripts
     {
         private void OnEnable()
         {
-            goal = 3;
+            goal = 5;
             EventHandler.onCollectNatureResource += UpdateAmount;
         }
 
@@ -22,13 +22,16 @@ namespace CoreMechanics.TaskScripts
         protected override void Reward()
         {
             gameManager.HandleProsperity(15, true);
-            Debug.Log("get reward");
+            ChangePlayerSpeed(1.5f, 10f);
+            // Debug.Log("get reward");
         }
 
         protected override void Punish()
         {
-            gameManager.HandleProsperity(15, false);
-            Debug.Log("get punish");
+            gameManager.HandleNatureExp(gameManager.natureExp * 0.1f, false);
+            gameManager.HandleScienceExp(gameManager.scienceExp * 0.1f, false);
+            ChangePlayerSpeed(0.5f, 10f);
+            // Debug.Log("get punish");
         }
     }
 }

@@ -6,7 +6,7 @@ namespace CoreMechanics.EventScripts
 {
     public class 草药寻踪 : BaseDevelopmentalEvent
     {
-        private const float Duration = 20;
+        private const float Duration = 30;
 
         protected override void Pickup()
         {

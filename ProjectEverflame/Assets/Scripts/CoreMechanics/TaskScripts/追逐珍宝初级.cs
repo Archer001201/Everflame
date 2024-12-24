@@ -13,7 +13,7 @@ namespace CoreMechanics.TaskScripts
 
         private void OnEnable()
         {
-            goal = 2;
+            goal = 1;
         }
 
         private void OnDisable()
@@ -56,13 +56,15 @@ namespace CoreMechanics.TaskScripts
         protected override void Reward()
         {
             gameManager.HandleProsperity(15, true);
-            Debug.Log("get reward");
+            gameManager.HandleScienceExp(gameManager.scienceExp * 0.3f, true);
+            // Debug.Log("get reward");
         }
 
         protected override void Punish()
         {
-            gameManager.HandleProsperity(15, false);
-            Debug.Log("get punish");
+            gameManager.HandleScienceExp(gameManager.scienceExp * 0.3f, false);
+            StartDestroyResources(ResourceType.自然, 10);
+            // Debug.Log("get punish");
         }
 
         public override void UpdateAmount(float val)

@@ -10,6 +10,7 @@ namespace Player
     {
         public LayerMask groundLayer;
         public LayerMask eventLayer;
+        public Animator animator;
         private NavMeshAgent _agent;
         private Camera _camera;
         private UiManager _uiManager;
@@ -22,6 +23,10 @@ namespace Player
 
         private void Update()
         {
+            float speed = _agent.velocity.magnitude;
+            // Debug.Log(speed);
+            animator.SetFloat("MoveSpeed", speed); 
+            
             var ray = _camera.ScreenPointToRay(Input.mousePosition);
             
             if (Physics.Raycast(ray, out var hit2, Mathf.Infinity, eventLayer))

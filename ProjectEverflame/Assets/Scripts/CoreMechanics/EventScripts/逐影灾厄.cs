@@ -6,8 +6,8 @@ namespace CoreMechanics.EventScripts
     {
         protected override void Pickup()
         {
-            // gameManager.HandleScienceExp(gameManager.scienceExp * 0.15f, false);
-            StartDestroyResources(ResourceType.科技, 8);
+            gameManager.HandleNatureExp(gameManager.natureExp * 0.30f, false);
+            StartDestroyResources(ResourceType.科技, 10);
             base.Pickup();
         }
     }

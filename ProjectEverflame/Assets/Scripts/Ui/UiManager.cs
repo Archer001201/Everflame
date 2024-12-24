@@ -74,6 +74,7 @@ namespace Ui
             // natureText.text = $"<sprite name=leaf> {(int)gameManager.natureExp}";
             // scienceText.text = $"<sprite name=settings> {(int)gameManager.scienceExp}";
             // trendText.text = "趋势：" + gameManager.trendRatio;
+            // Debug.Log(gameManager.trendRatio);
             trendImage.fillAmount = gameManager.trendRatio;
             
             float num1 = gameManager.levelExp - gameManager.currentPeriodExp;

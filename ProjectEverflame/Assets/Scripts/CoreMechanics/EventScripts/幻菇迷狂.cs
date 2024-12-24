@@ -6,7 +6,7 @@ namespace CoreMechanics.EventScripts
     {
         protected override void Pickup()
         {
-            gameManager.HandleNatureExp(gameManager.natureExp * 0.15f, false);
+            gameManager.HandleNatureExp(gameManager.natureExp * 0.20f, false);
             ChangePlayerSpeed(0.5f, 10f);
             base.Pickup();
         }

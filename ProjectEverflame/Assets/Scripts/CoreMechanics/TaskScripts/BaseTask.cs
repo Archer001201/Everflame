@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Player;
 using Ui;
 using UnityEngine;
 using Utilities;
@@ -28,6 +29,16 @@ namespace CoreMechanics.TaskScripts
                 Reward();
                 Destroy(gameObject);
             }
+        }
+        
+        protected void ChangePlayerSpeed(float rate, float time)
+        {
+            GameObject.FindWithTag("Player").GetComponent<MoveController>().StartChangeSpeed(rate, time);
+        }
+        
+        protected void StartDestroyResources(ResourceType type, float time)
+        {
+            Utilities.EventHandler.DestroyResource(type, time);
         }
 
         protected abstract void Reward();

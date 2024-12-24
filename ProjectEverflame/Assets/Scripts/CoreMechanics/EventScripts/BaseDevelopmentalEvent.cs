@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Player;
 using TMPro;
 using Ui;
@@ -88,6 +89,11 @@ namespace CoreMechanics.EventScripts
         protected void StartDestroyResources(ResourceType type, float time)
         {
             EventHandler.DestroyResource(type, time);
+        }
+
+        protected void ActivateMagnet(List<ResourceType> types, float time)
+        {
+            _player.GetComponentInChildren<Magnet>().StartMagnet(types, time);
         }
 
         // private IEnumerator DestroyResources(ResourceType type, float time)

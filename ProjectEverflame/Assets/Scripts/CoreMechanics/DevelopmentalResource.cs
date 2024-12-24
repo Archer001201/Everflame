@@ -28,9 +28,11 @@ namespace CoreMechanics
         private GameManager _gameManager;
         private MeshRenderer _meshRenderer;
         private TextMeshProUGUI _nameTmp;
+        private Rigidbody _rb;
 
         private void Awake()
         {
+            _rb = GetComponent<Rigidbody>();
             _meshRenderer = GetComponent<MeshRenderer>();
             _nameTmp = GetComponentInChildren<TextMeshProUGUI>();
             _gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
@@ -59,6 +61,11 @@ namespace CoreMechanics
         private void OnTriggerEnter(Collider other)
         {
             if (!other.gameObject.CompareTag("Player")) return;
+            Pickup();
+        }
+
+        public void Pickup()
+        {
             onPickupEvent?.Invoke();
             objectPool.ReturnToPool(gameObject);
         }
@@ -116,6 +123,18 @@ namespace CoreMechanics
         private void DestroyedState(ResourceType type, float time)
         {
             if (resourceType == type) objectPool.ReturnToPool(gameObject);
+        }
+
+        public void MoveToPlayer(GameObject target)
+        {
+            var speed = 5f; 
+            // 计算目标方向
+            Vector3 direction = (target.transform.position - _rb.position).normalized;
+            Vector3 moveStep = direction * speed * Time.fixedDeltaTime;
+
+            // 使用 MovePosition 平滑移动
+            _rb.MovePosition(_rb.position + moveStep);
+            // Debug.Log("move");
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Utilities;
 using EventHandler = Utilities.EventHandler;
 using Random = UnityEngine.Random;
 
@@ -14,15 +15,22 @@ namespace CoreMechanics
         public GameObject prefab;
         public float radius;
         public Vector2 range;
+        public Vector2 period1Range;
+        public Vector2 period2Range;
+        public Vector2 period3Range;
+        public Vector2 period4Range;
         public int poolSize = 10;
+        public GameManager gameManager;
         [FormerlySerializedAs("eventTypes")] public List<ResourceType> resourceTypes;
-        public List<ResourceType> tempList = new List<ResourceType>();
+        // public List<ResourceType> tempList = new List<ResourceType>();
         
         private Queue<GameObject> _objectPool;
 
         private void Awake()
         {
+            gameManager.SetResourceGenerator(this);
             InitializeObjectPool();
+            UpdateEventList();
         }
 
         private void OnEnable()
@@ -50,6 +58,7 @@ namespace CoreMechanics
 
         private GameObject GetPooledObject()
         {
+            if (resourceTypes.Count < 1) return null;
             var type = resourceTypes[Random.Range(0, resourceTypes.Count)];
             // if (type == lockdownType && lockdown) return null;
             if (_objectPool.Count > 0)
@@ -103,18 +112,40 @@ namespace CoreMechanics
 
         private IEnumerator Lockdown(ResourceType type, float time)
         {
-            tempList.Clear();
+            // tempList.Clear();
+            List<ResourceType> temp = new List<ResourceType>();
             foreach (var r in resourceTypes.ToList())
             {
                 if (r == type)
                 {
-                    tempList.Add(r);
+                    temp.Add(r);
                     resourceTypes.Remove(r);
                 }
             }
             yield return new WaitForSeconds(time);
-            resourceTypes.AddRange(tempList);
-            tempList.Clear();
+            resourceTypes.AddRange(temp);
+            // tempList.Clear();
+        }
+        
+        public void UpdateEventList()
+        {
+            switch (gameManager.currentPeriod)
+            {
+                case CivilPeriod.荒原纪:
+                    range = period1Range;
+                    break;
+                case CivilPeriod.启程纪: 
+                    range = period2Range;
+                    break;
+                case CivilPeriod.黎明纪: 
+                    range = period3Range;
+                    break;
+                case CivilPeriod.星辉纪:
+                    range = period4Range;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

@@ -258,7 +258,7 @@ GameObject:
   m_Layer: 0
   m_HasEditorInfo: 1
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Resource
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -621,7 +621,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 122
+  m_Constraints: 112
   m_CollisionDetection: 2
 --- !u!114 &-8262834999992580741
 MonoBehaviour:
@@ -642,3 +642,4 @@ MonoBehaviour:
   duration: 30
   matBlue: {fileID: 2100000, guid: 08eb8aa191ffa425a8c9d72d5d1b29e4, type: 2}
   matGreen: {fileID: 2100000, guid: 3147d51d699974b848731f7f688e54c8, type: 2}
+  resourceType: 0

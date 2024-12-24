@@ -5,7 +5,7 @@ namespace CoreMechanics.EventScripts
 {
     public class 流火珍宝 : BaseDevelopmentalEvent
     {
-        private const float Duration = 20;
+        private const float Duration = 30;
         
         protected override void Pickup()
         {

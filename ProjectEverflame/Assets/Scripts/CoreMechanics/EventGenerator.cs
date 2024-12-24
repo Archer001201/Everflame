@@ -13,6 +13,10 @@ namespace CoreMechanics
         public GameObject prefab;
         public float radius;
         public Vector2 range;
+        public Vector2 period1Range;
+        public Vector2 period2Range;
+        public Vector2 period3Range;
+        public Vector2 period4Range;
         public int poolSize = 10;
         public GameManager gameManager;
         public List<EventStruct> period1Events;
@@ -91,15 +95,27 @@ namespace CoreMechanics
             // ReSharper disable once IteratorNeverReturns
         }
 
-        private void UpdateEventList()
+        public void UpdateEventList()
         {
-            currentEvents.Clear();
+            // currentEvents.Clear();
             switch (gameManager.currentPeriod)
             {
-                case CivilPeriod.荒原纪: currentEvents.AddRange(period1Events); break;
-                case CivilPeriod.启程纪: currentEvents.AddRange(period2Events); break;
-                case CivilPeriod.黎明纪: currentEvents.AddRange(period3Events); break;
-                case CivilPeriod.星辉纪: currentEvents.AddRange(period4Events); break;
+                case CivilPeriod.荒原纪:
+                    currentEvents = period1Events; 
+                    range = period1Range;
+                    break;
+                case CivilPeriod.启程纪: 
+                    currentEvents = period2Events; 
+                    range = period2Range;
+                    break;
+                case CivilPeriod.黎明纪: 
+                    currentEvents = period3Events; 
+                    range = period3Range;
+                    break;
+                case CivilPeriod.星辉纪:
+                    currentEvents = period4Events; 
+                    range = period4Range;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -113,6 +129,9 @@ namespace CoreMechanics
                 "幻菇迷狂" => obj.AddComponent<幻菇迷狂>(),
                 "草药寻踪" => obj.AddComponent<草药寻踪>(),
                 "流火珍宝" => obj.AddComponent<流火珍宝>(),
+                "风羽赠礼" => obj.AddComponent<风羽赠礼>(),
+                "雷卵奇迹" => obj.AddComponent<雷卵奇迹>(),
+                "星果盛宴" => obj.AddComponent<星果盛宴>(),
                 _ => null
             };
 
