@@ -127,6 +127,7 @@ namespace Player
 
         private void SwitchAbility(Vector2 vec2)
         {
+            if (!teleport.unlocked) return;
             switch (vec2.y)
             {
                 case > 0:

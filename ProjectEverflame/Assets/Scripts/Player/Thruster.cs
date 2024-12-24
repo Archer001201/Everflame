@@ -12,6 +12,7 @@ namespace Player
         public float dashDuration = 0.3f;  
         public float charge = 10;
         public bool unlocked;
+        public ParticleSystem dashVfx;
 
         private Rigidbody _rb;
         private NavMeshAgent _agent;
@@ -31,6 +32,7 @@ namespace Player
             _controls.Play.UseAbility.performed += context =>
             {
                 if (charge < 10 || !unlocked) return;
+                dashVfx.Play();
                 StartCoroutine(Dash());
                 charge = 0;
                 _uiManager.UpdateThruster(charge);

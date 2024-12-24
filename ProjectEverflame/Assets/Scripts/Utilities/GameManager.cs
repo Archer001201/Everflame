@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using CoreMechanics;
 using Player;
 using Ui;
@@ -30,6 +31,10 @@ namespace Utilities
         private Thruster _thruster;
         private Teleport _teleport;
         private ResourceGenerator _resourceGenerator;
+        
+        private int _reverseNatureExp;
+        private int _reverseScienceExp;
+        private Coroutine _reverseCoroutine;
 
         private void Awake()
         {
@@ -41,6 +46,7 @@ namespace Utilities
         {
             _thruster = GameObject.FindWithTag("Player").GetComponent<Thruster>();
             _teleport = GameObject.FindWithTag("Player").GetComponent<Teleport>();
+            HandleNatureExp(0f,true);
         }
 
         private void HandleLevel(bool levelUp)
@@ -85,6 +91,7 @@ namespace Utilities
 
         public void HandleNatureExp(float exp, bool additive)
         {
+            if (_reverseNatureExp > 0) exp *= -1;
             if (additive)
             {
                 natureExp += exp;
@@ -104,6 +111,7 @@ namespace Utilities
         
         public void HandleScienceExp(float exp, bool additive)
         {
+            if (_reverseScienceExp > 0) exp = -exp;
             if (additive)
             {
                 scienceExp += exp;
@@ -171,6 +179,33 @@ namespace Utilities
         public void SetResourceGenerator(ResourceGenerator generator)
         {
             _resourceGenerator = generator;
+        }
+
+        public void StartReverse(ResourceType type, float time)
+        {
+            StartCoroutine(ReverseExp(type, time));
+        }
+
+        private IEnumerator ReverseExp(ResourceType type, float time)
+        {
+            switch (type)
+            {
+                case ResourceType.自然: _reverseNatureExp ++; break;
+                case ResourceType.科技: _reverseScienceExp ++; break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+            yield return new WaitForSeconds(time);
+            switch (type)
+            {
+                case ResourceType.自然: _reverseNatureExp --; break;
+                case ResourceType.科技: _reverseScienceExp --; break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+            
+            _reverseNatureExp = Mathf.Clamp(_reverseNatureExp, 0, int.MaxValue);
+            _reverseScienceExp = Mathf.Clamp(_reverseScienceExp, 0, int.MaxValue);
         }
     }
 }

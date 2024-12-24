@@ -8,6 +8,7 @@ TagManager:
   - TaskManager
   - MainCanvas
   - Resource
+  - BombGenerator
   layers:
   - Default
   - TransparentFX

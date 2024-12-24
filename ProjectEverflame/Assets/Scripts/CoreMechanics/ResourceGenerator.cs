@@ -25,6 +25,7 @@ namespace CoreMechanics
         // public List<ResourceType> tempList = new List<ResourceType>();
         
         private Queue<GameObject> _objectPool;
+        private Coroutine _lockdownCoroutine;
 
         private void Awake()
         {
@@ -107,7 +108,11 @@ namespace CoreMechanics
 
         private void SetLockdown(ResourceType type, float time)
         {
-            StartCoroutine(Lockdown(type, time));
+            if (_lockdownCoroutine != null)
+            {
+                StopCoroutine(_lockdownCoroutine);
+            }
+            _lockdownCoroutine = StartCoroutine(Lockdown(type, time));
         }
 
         private IEnumerator Lockdown(ResourceType type, float time)

@@ -132,6 +132,12 @@ namespace CoreMechanics
                 "风羽赠礼" => obj.AddComponent<风羽赠礼>(),
                 "雷卵奇迹" => obj.AddComponent<雷卵奇迹>(),
                 "星果盛宴" => obj.AddComponent<星果盛宴>(),
+                
+                "铁炬动乱" => obj.AddComponent<铁炬动乱>(),
+                "学馆纷争" => obj.AddComponent<学馆纷争>(),
+                "丹毒事件" => obj.AddComponent<丹毒事件>(),
+                "风引琉沙" => obj.AddComponent<风引琉沙>(),
+                "烛林秘光" => obj.AddComponent<烛林秘光>(),
                 _ => null
             };
 

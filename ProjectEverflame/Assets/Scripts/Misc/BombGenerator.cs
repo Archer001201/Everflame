@@ -22,7 +22,7 @@ namespace Misc
 
         private void Start()
         {
-            StartSpawn(10,3);
+            // StartSpawn(10,3);
         }
 
         private void InitializeObjectPool()

@@ -22,7 +22,7 @@ namespace CoreMechanics.EventScripts
         private GameObject _player;
         private MeshRenderer _meshRenderer;
         private TextMeshProUGUI _nameTmp;
-        public BombGenerator bombGenerator;
+        private BombGenerator _bombGenerator;
         
         private void Awake()
         {
@@ -30,6 +30,7 @@ namespace CoreMechanics.EventScripts
             _nameTmp = GetComponentInChildren<TextMeshProUGUI>();
             gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
             _uiManager = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<UiManager>();
+            _bombGenerator = GameObject.FindWithTag("BombGenerator").GetComponent<BombGenerator>();
         }
         
         private void OnEnable()
@@ -100,7 +101,12 @@ namespace CoreMechanics.EventScripts
 
         protected void LaunchBomb(float time, int wave)
         {
-            bombGenerator.StartSpawn(time, wave);
+            _bombGenerator.StartSpawn(time, wave);
+        }
+
+        protected void ReverseExp(ResourceType type, float time)
+        {
+            gameManager.StartReverse(type, time);
         }
 
         // private IEnumerator DestroyResources(ResourceType type, float time)
