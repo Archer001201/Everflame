@@ -10,7 +10,7 @@ namespace Player
     {
         public float dashForce = 10f;       
         public float dashDuration = 0.3f;  
-        public float charge = 10;
+        public int charge = 3;
         public bool unlocked;
         public ParticleSystem dashVfx;
 
@@ -31,10 +31,10 @@ namespace Player
             
             _controls.Play.UseAbility.performed += context =>
             {
-                if (charge < 10 || !unlocked) return;
+                if (charge < 1 || !unlocked) return;
                 dashVfx.Play();
                 StartCoroutine(Dash());
-                charge = 0;
+                charge --;
                 _uiManager.UpdateThruster(charge);
             };
         }
@@ -81,10 +81,10 @@ namespace Player
             _agent.SetDestination(_targetDestination);
         }
 
-        public void Charging(float val)
+        public void Charging(int val)
         {
             charge += val;
-            charge = Mathf.Clamp(charge, 0, 10);
+            charge = Mathf.Clamp(charge, 0, int.MaxValue);
             _uiManager.UpdateThruster(charge);
         }
 

@@ -125,22 +125,47 @@ namespace CoreMechanics
         {
             BaseDevelopmentalEvent e = eventStruct.eventName switch
             {
+                //荒原纪
+                //危机
                 "逐影灾厄" => obj.AddComponent<逐影灾厄>(),
                 "幻菇迷狂" => obj.AddComponent<幻菇迷狂>(),
+                //任务
                 "草药寻踪" => obj.AddComponent<草药寻踪>(),
                 "流火珍宝" => obj.AddComponent<流火珍宝>(),
+                //机遇
                 "风羽赠礼" => obj.AddComponent<风羽赠礼>(),
                 "雷卵奇迹" => obj.AddComponent<雷卵奇迹>(),
                 "星果盛宴" => obj.AddComponent<星果盛宴>(),
                 
+                //启程纪
+                //危机
                 "铁炬动乱" => obj.AddComponent<铁炬动乱>(),
                 "学馆纷争" => obj.AddComponent<学馆纷争>(),
                 "丹毒事件" => obj.AddComponent<丹毒事件>(),
+                //机遇
                 "风引琉沙" => obj.AddComponent<风引琉沙>(),
                 "烛林秘光" => obj.AddComponent<烛林秘光>(),
+                "火藤余焰" => obj.AddComponent<火藤余焰>(),
                 
+                //黎明纪
+                //危机
                 "蒸汽工潮" => obj.AddComponent<蒸汽工潮>(),
                 "污染之乱" => obj.AddComponent<污染之乱>(),
+                //机遇
+                "合金" => obj.AddComponent<合金>(),
+                "奇妙微生物" => obj.AddComponent<奇妙微生物>(),
+                "蒸汽猎鹰" => obj.AddComponent<蒸汽猎鹰>(),
+                "铁路献礼" => obj.AddComponent<铁路献礼>(),
+                
+                //星辉纪
+                //危机
+                "实验失控" => obj.AddComponent<实验失控>(),
+                "星尘爆炸" => obj.AddComponent<星尘爆炸>(),
+                //机遇
+                "空轨系统通车" => obj.AddComponent<空轨系统通车>(),
+                "能源矩阵" => obj.AddComponent<能源矩阵>(),
+                "星尘驱动实验成功" => obj.AddComponent<星尘驱动实验成功>(),
+                "星环通信复苏" => obj.AddComponent<星环通信复苏>(),
                 _ => null
             };
 

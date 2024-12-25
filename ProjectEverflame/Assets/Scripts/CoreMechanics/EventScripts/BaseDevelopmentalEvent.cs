@@ -109,6 +109,16 @@ namespace CoreMechanics.EventScripts
             gameManager.StartReverse(type, time);
         }
 
+        protected void AddThruster(int val)
+        {
+            _player.GetComponent<PlayerController>().thruster.Charging(val);
+        }
+
+        protected void AddTeleport(int val)
+        {
+            _player.GetComponent<PlayerController>().teleport.Charging(val);
+        }
+
         // private IEnumerator DestroyResources(ResourceType type, float time)
         // {
         //     EventHandler.DestroyResource(type, true);

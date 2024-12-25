@@ -9,7 +9,7 @@ namespace Player
     {
         public GameObject portalPrefab;         // 传送门预制体
         public int maxPortals = 2;              // 最大传送门数量
-        public float charge = 20;
+        public float charge = 3;
         public bool unlocked;
         
         private Queue<GameObject> _portalPool;  // 传送门对象池
@@ -44,8 +44,8 @@ namespace Player
         // 放置传送门
         private void PlacePortal()
         {
-            if (charge < 10 || !unlocked) return;
-            charge -= 10;
+            if (charge < 1 || !unlocked) return;
+            charge --;
             _uiManager.UpdatePortal(charge);
             
             // 计算位置和方向
@@ -77,7 +77,7 @@ namespace Player
         public void Charging(float val)
         {
             charge += val;
-            charge = Mathf.Clamp(charge, 0, 20);
+            charge = Mathf.Clamp(charge, 0, int.MaxValue);
             _uiManager.UpdatePortal(charge);
         }
     }

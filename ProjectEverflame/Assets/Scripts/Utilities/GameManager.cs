@@ -95,7 +95,7 @@ namespace Utilities
             if (additive)
             {
                 natureExp += exp;
-                if (_thruster.enabled) _thruster.Charging(exp);
+                // if (_thruster.enabled) _thruster.Charging(exp);
                 EventHandler.CollectNatureResource(exp);
             }
             else natureExp -= exp;
@@ -115,7 +115,7 @@ namespace Utilities
             if (additive)
             {
                 scienceExp += exp;
-                _teleport.Charging(scienceExp);
+                // _teleport.Charging(scienceExp);
             }
             else scienceExp -= exp;
             
@@ -143,11 +143,11 @@ namespace Utilities
 
         private static int CalculateLevelUpExp(int targetLevel)
         {
-            var exp = 3;
+            var exp = 0;
             for (var i = 1; i <= targetLevel; i++)
             {
                 var para = i / 5 + 1;
-                exp += 2 * para + (para + 1) * (i - para);
+                exp += 5 * para + (para + 1) * (i - para);
             }
             return exp;
         }
