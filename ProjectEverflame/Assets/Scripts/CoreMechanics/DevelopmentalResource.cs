@@ -48,6 +48,7 @@ namespace CoreMechanics
             // destroyed = false;
             StartCoroutine(ReturnObjectAfterTime(duration));
             EventHandler.onDestroyResource += DestroyedState;
+            EventHandler.onRemoveResource += ReturnSelfToPool;
         }
 
         private void OnDisable()
@@ -55,6 +56,7 @@ namespace CoreMechanics
             onPickupEvent.RemoveAllListeners();
             objectPool = null;
             EventHandler.onDestroyResource -= DestroyedState;
+            EventHandler.onRemoveResource -= ReturnSelfToPool;
             StopAllCoroutines();
         }
 
@@ -135,6 +137,11 @@ namespace CoreMechanics
             // 使用 MovePosition 平滑移动
             _rb.MovePosition(_rb.position + moveStep);
             // Debug.Log("move");
+        }
+
+        public void ReturnSelfToPool()
+        {
+            objectPool.ReturnToPool(gameObject);
         }
     }
 }

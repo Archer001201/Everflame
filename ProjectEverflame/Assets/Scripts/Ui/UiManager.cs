@@ -40,6 +40,7 @@ namespace Ui
         
         [Header("Disaster Panel")]
         public GameObject disasterPanel;
+        public Image disasterImage;
         public TextMeshProUGUI dNameText;
         public TextMeshProUGUI dDescriptionText;
         
@@ -124,6 +125,7 @@ namespace Ui
         {
             dNameText.text = disaster.name;
             dDescriptionText.text = disaster.description;
+            disasterImage.sprite = disaster.background;
         }
 
         public void UpdateEventPanel(GameObject obj)

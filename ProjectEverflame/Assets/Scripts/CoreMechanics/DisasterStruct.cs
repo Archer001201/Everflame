@@ -15,7 +15,7 @@ namespace CoreMechanics
         public string name;
         public DisasterType disasterType;
         [TextArea] public string description;
-        public Image background;
+        public Sprite background;
         public int damageToProsperity;
         public float damageRateToScience;
         public float damageRateToNature;

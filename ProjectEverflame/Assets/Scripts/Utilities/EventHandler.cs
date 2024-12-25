@@ -41,5 +41,12 @@ namespace Utilities
         {
             onEscape?.Invoke(val);
         }
+
+        public static Action onRemoveResource;
+
+        public static void RemoveResource()
+        {
+            onRemoveResource?.Invoke();
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Ui;
 using UnityEngine;
 using Utilities;
+using EventHandler = Utilities.EventHandler;
 using Random = UnityEngine.Random;
 
 // ReSharper disable IteratorNeverReturns
@@ -58,6 +59,7 @@ namespace CoreMechanics
                 
                 uiManager.UpdateDisasterPanel(nextDisaster);
                 uiManager.disasterPanel.SetActive(true);
+                EventHandler.RemoveResource();
                 DealDamage(nextDisaster);
                 
                 yield return new WaitForSeconds(duration);
