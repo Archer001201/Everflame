@@ -93,6 +93,12 @@ namespace Player
             StartCoroutine(ChangeSpeed(rate, time));
         }
 
+        public void ChangeSpeedWithoutTimer(float rate, bool multiple)
+        {
+            if (multiple) _agent.speed *= rate;
+            else _agent.speed /= rate;
+        }
+
         /// <summary>
         /// 让玩家进入眩晕状态，无法移动
         /// </summary>
