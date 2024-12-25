@@ -118,6 +118,7 @@ namespace Utilities
             {
                 scienceExp += exp;
                 // _teleport.Charging(scienceExp);
+                EventHandler.CollectScienceResource(exp);
             }
             else scienceExp -= exp;
             

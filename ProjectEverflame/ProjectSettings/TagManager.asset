@@ -9,6 +9,8 @@ TagManager:
   - MainCanvas
   - Resource
   - BombGenerator
+  - RainManager
+  - Circle
   layers:
   - Default
   - TransparentFX

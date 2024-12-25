@@ -8,7 +8,7 @@ namespace Ui
 {
     public enum TaskType
     {
-        自然采集初级, 追逐珍宝初级
+        自然采集初级, 自然采集中级, 追逐珍宝初级, 追逐珍宝中级, 科技采集中级, 科技采集高级, 出圈中级
     }
     
     public class TaskPanel : MonoBehaviour
@@ -17,6 +17,7 @@ namespace Ui
         public TextMeshProUGUI timerText;
         public Image progressBar;
         public float progressValue;
+        // public float timerValue;
 
         private void Awake()
         {
@@ -35,6 +36,7 @@ namespace Ui
 
         public void StartTask(float time)
         {
+            // timerValue = time;
             StartCoroutine(CountDown(time));
         }
 

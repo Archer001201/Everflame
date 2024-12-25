@@ -27,5 +27,19 @@ namespace Utilities
         {
             onUpdateEnvironment?.Invoke(level);
         }
+        
+        public static Action<float> onCollectScienceResource;
+
+        public static void CollectScienceResource(float amount)
+        {
+            onCollectScienceResource?.Invoke(amount);
+        }
+
+        public static Action<float> onEscape;
+
+        public static void Escape(float val)
+        {
+            onEscape?.Invoke(val);
+        }
     }
 }

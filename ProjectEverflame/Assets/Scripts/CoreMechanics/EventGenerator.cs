@@ -146,6 +146,9 @@ namespace CoreMechanics
                 "风引琉沙" => obj.AddComponent<风引琉沙>(),
                 "烛林秘光" => obj.AddComponent<烛林秘光>(),
                 "火藤余焰" => obj.AddComponent<火藤余焰>(),
+                //任务
+                "火中泣魂" => obj.AddComponent<火中泣魂>(),
+                "反生灾祸" => obj.AddComponent<反生灾祸>(),
                 
                 //黎明纪
                 //危机
@@ -156,6 +159,9 @@ namespace CoreMechanics
                 "奇妙微生物" => obj.AddComponent<奇妙微生物>(),
                 "蒸汽猎鹰" => obj.AddComponent<蒸汽猎鹰>(),
                 "铁路献礼" => obj.AddComponent<铁路献礼>(),
+                //任务
+                "喧器白雾" => obj.AddComponent<喧器白雾>(),
+                "阴雨下的星辰" => obj.AddComponent<阴雨下的星辰>(),
                 
                 //星辉纪
                 //危机
@@ -166,6 +172,9 @@ namespace CoreMechanics
                 "能源矩阵" => obj.AddComponent<能源矩阵>(),
                 "星尘驱动实验成功" => obj.AddComponent<星尘驱动实验成功>(),
                 "星环通信复苏" => obj.AddComponent<星环通信复苏>(),
+                //任务
+                "觉醒之翼" => obj.AddComponent<觉醒之翼>(),
+                
                 _ => null
             };
 

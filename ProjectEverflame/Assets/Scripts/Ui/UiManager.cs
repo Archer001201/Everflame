@@ -148,7 +148,12 @@ namespace Ui
             switch (type)
             {
                 case TaskType.自然采集初级: obj.AddComponent<自然采集初级>(); break;
+                case TaskType.自然采集中级: obj.AddComponent<自然采集中级>(); break;
                 case TaskType.追逐珍宝初级: obj.AddComponent<追逐珍宝初级>(); break;
+                case TaskType.追逐珍宝中级: obj.AddComponent<追逐珍宝中级>(); break;
+                case TaskType.科技采集中级: obj.AddComponent<科技采集中级>(); break;
+                case TaskType.科技采集高级: obj.AddComponent<科技采集高级>(); break;
+                case TaskType.出圈中级: obj.AddComponent<出圈中级>(); break;
             }
             
             var p = obj.GetComponent<TaskPanel>();
