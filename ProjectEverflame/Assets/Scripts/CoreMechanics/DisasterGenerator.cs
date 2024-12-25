@@ -52,7 +52,7 @@ namespace CoreMechanics
 
                 for (var countdown = timer; countdown > 0; countdown -= 1f)
                 {
-                    uiManager.UpdateAlarmText((int)countdown);
+                    uiManager.UpdateAlarmText((int)countdown, nextDisaster.disasterType.ToString());
                     yield return new WaitForSeconds(1f);
                 }
                 

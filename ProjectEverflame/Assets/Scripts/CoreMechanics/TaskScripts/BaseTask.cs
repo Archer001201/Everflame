@@ -71,6 +71,12 @@ namespace CoreMechanics.TaskScripts
             t.Charging(t.charge * -1);
         }
         
+        protected void ClearTeleport()
+        {
+            var t = GameObject.FindWithTag("Player").GetComponent<Teleport>();
+            t.Charging(t.charge * -1);
+        }
+        
         protected void ReverseExp(ResourceType type, float time)
         {
             gameManager.StartReverse(type, time);

@@ -8,7 +8,7 @@ namespace Ui
 {
     public enum TaskType
     {
-        自然采集初级, 自然采集中级, 追逐珍宝初级, 追逐珍宝中级, 科技采集中级, 科技采集高级, 出圈中级
+        自然采集初级, 自然采集中级, 追逐珍宝初级, 追逐珍宝中级, 追逐珍宝高级, 科技采集中级, 科技采集高级, 科技不采集, 出圈中级
     }
     
     public class TaskPanel : MonoBehaviour

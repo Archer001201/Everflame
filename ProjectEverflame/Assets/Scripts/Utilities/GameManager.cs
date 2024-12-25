@@ -17,6 +17,7 @@ namespace Utilities
         public int level = 1;
         public CivilPeriod currentPeriod = CivilPeriod.荒原纪;
         public float prosperity = 100;
+        public float maxProsperity = 100;
         public float levelExp;
         public float levelUpExp;
         public float natureExp;
@@ -55,7 +56,7 @@ namespace Utilities
             if (levelUp)
             {
                 level++;
-                prosperity += 50;
+                HandleProsperity(50, true);
                 // Debug.Log("health: " + health);
             }
             else level--;
@@ -76,7 +77,9 @@ namespace Utilities
             };
 
             _thruster.unlocked = level >= 5;
+            _uiManager.thrusterPanel.SetActive(_thruster.unlocked);
             _teleport.unlocked = level >= 13;
+            _uiManager.portalPanel.SetActive(_teleport.unlocked);
             
             _eventGenerator.UpdateEventList();
             _resourceGenerator.UpdateEventList();
@@ -87,6 +90,7 @@ namespace Utilities
         {
             if (additive) prosperity += val;
             else prosperity -= val;
+            if (prosperity > maxProsperity) maxProsperity = prosperity;
             prosperity = Mathf.Clamp(prosperity, 0, float.MaxValue);
             _uiManager.UpdateUiElements();
         }

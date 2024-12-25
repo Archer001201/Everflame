@@ -29,10 +29,14 @@ namespace Ui
         // public TextMeshProUGUI scienceText;
         // public TextMeshProUGUI trendText;
         public TextMeshProUGUI alarmText;
-        public TextMeshProUGUI thrusterText;
-        public TextMeshProUGUI portalText;
+        public TextMeshProUGUI disasterText;
+        public GameObject alarmPanel;
+        // public TextMeshProUGUI thrusterText;
+        // public TextMeshProUGUI portalText;
         public Image trendImage;
         public Image expImage;
+        public Image prosperityImage;
+        public TextMeshProUGUI prosperityText;
         
         [Header("Disaster Panel")]
         public GameObject disasterPanel;
@@ -50,6 +54,12 @@ namespace Ui
         public GameObject taskPanel;
         public GameObject taskPrefab;
         private TaskManager _taskManager;
+        
+        [Header("Abilities Panel")]
+        public GameObject thrusterPanel;
+        public GameObject portalPanel;
+        public TextMeshProUGUI portalText;
+        public TextMeshProUGUI thrusterText;
 
         private void Awake()
         {
@@ -69,29 +79,45 @@ namespace Ui
             float targetFillAmount = gameManager.trendRatio;
             // 使用 Mathf.Lerp 平滑过渡到目标值
             trendImage.fillAmount = Mathf.Lerp(trendImage.fillAmount, targetFillAmount, 5f * Time.deltaTime);
+
+            float num1 = gameManager.prosperity / gameManager.maxProsperity;
+            prosperityImage.fillAmount = Mathf.Lerp(prosperityImage.fillAmount, num1, 5f * Time.deltaTime);
+
+            float num2 = (gameManager.levelExp - gameManager.currentPeriodExp) /
+                         (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
+            expImage.fillAmount = Mathf.Lerp(expImage.fillAmount, num2, 5f * Time.deltaTime);
         }
 
         public void UpdateUiElements()
         {
             periodText.text = gameManager.currentPeriod.ToString();
             // levelText.text = "等级：" + gameManager.level;
-            levelExpText.text = "经验：" + gameManager.levelExp + " 下一级经验：" + gameManager.levelUpExp;
-            healthText.text = "繁荣：" + gameManager.prosperity;
+            // levelExpText.text = "经验：" + gameManager.levelExp + " 下一级经验：" + gameManager.levelUpExp;
+            // healthText.text = "繁荣：" + gameManager.prosperity;
             // natureText.text = "<sprite name=leaf> " + gameManager.natureExp;
             // natureText.text = $"<sprite name=leaf> {(int)gameManager.natureExp}";
             // scienceText.text = $"<sprite name=settings> {(int)gameManager.scienceExp}";
             // trendText.text = "趋势：" + gameManager.trendRatio;
             // Debug.Log(gameManager.trendRatio);
-            
-            float num1 = gameManager.levelExp - gameManager.currentPeriodExp;
-            float num2 = gameManager.nextPeriodExp - gameManager.currentPeriodExp;
+            prosperityText.text = gameManager.prosperity + "/" + gameManager.maxProsperity;
+
+
+
+            // float num1 = gameManager.levelExp - gameManager.currentPeriodExp;
+            // float num2 = gameManager.nextPeriodExp - gameManager.currentPeriodExp;
             // expImage.fillAmount = (gameManager.level%4-1)*0.25f + gameManager.levelExp/gameManager.levelUpExp * 0.25f;
-            expImage.fillAmount = num1 / num2;
+            // expImage.fillAmount = num1 / num2;
         }
 
-        public void UpdateAlarmText(int time)
+        public void UpdateAlarmText(int time, string strName)
         {
-            alarmText.text = "即将到来 " + time + "s";
+            if (time > 20) alarmPanel.SetActive(false);
+            else
+            {
+                alarmPanel.SetActive(true);
+                disasterText.text = strName;
+                alarmText.text = "即将到来 " + time + "s";
+            }
         }
 
         public void UpdateDisasterPanel(DisasterStruct disaster)
@@ -128,12 +154,12 @@ namespace Ui
 
         public void UpdateThruster(float val)
         {
-            thrusterText.text = "推进器充能：" + (int)val + "/10";
+            thrusterText.text = (int)val + "";
         }
 
         public void UpdatePortal(float val)
         {
-            portalText.text = "传送门充能：" + (int)val + "/20";
+            portalText.text = (int)val + "";
         }
 
         public void CreateTask(EventStruct eventStruct, TaskType type, float time)
@@ -151,8 +177,10 @@ namespace Ui
                 case TaskType.自然采集中级: obj.AddComponent<自然采集中级>(); break;
                 case TaskType.追逐珍宝初级: obj.AddComponent<追逐珍宝初级>(); break;
                 case TaskType.追逐珍宝中级: obj.AddComponent<追逐珍宝中级>(); break;
+                case TaskType.追逐珍宝高级: obj.AddComponent<追逐珍宝高级>(); break;
                 case TaskType.科技采集中级: obj.AddComponent<科技采集中级>(); break;
                 case TaskType.科技采集高级: obj.AddComponent<科技采集高级>(); break;
+                case TaskType.科技不采集: obj.AddComponent<科技不采集>(); break;
                 case TaskType.出圈中级: obj.AddComponent<出圈中级>(); break;
             }
             

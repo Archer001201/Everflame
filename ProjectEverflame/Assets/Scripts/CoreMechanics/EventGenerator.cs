@@ -174,6 +174,7 @@ namespace CoreMechanics
                 "星环通信复苏" => obj.AddComponent<星环通信复苏>(),
                 //任务
                 "觉醒之翼" => obj.AddComponent<觉醒之翼>(),
+                "追风竞赛" => obj.AddComponent<追风竞赛>(),
                 
                 _ => null
             };

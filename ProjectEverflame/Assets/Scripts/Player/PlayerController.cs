@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Ui;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
 namespace Player
@@ -152,10 +153,14 @@ namespace Player
                 case Ability.Teleport:
                     teleport.enabled = true;
                     thruster.enabled = false;
+                    _uiManager.portalPanel.GetComponent<Image>().enabled = true;
+                    _uiManager.thrusterPanel.GetComponent<Image>().enabled = false;
                     break;
                 case Ability.Thruster:
                     teleport.enabled = false;
                     thruster.enabled = true;
+                    _uiManager.portalPanel.GetComponent<Image>().enabled = false;
+                    _uiManager.thrusterPanel.GetComponent<Image>().enabled = true;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
