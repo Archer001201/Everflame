@@ -47,6 +47,7 @@ namespace Utilities
             _thruster = GameObject.FindWithTag("Player").GetComponent<Thruster>();
             _teleport = GameObject.FindWithTag("Player").GetComponent<Teleport>();
             HandleNatureExp(0f,true);
+            EventHandler.UpdateEnvironment(level);
         }
 
         private void HandleLevel(bool levelUp)
@@ -61,6 +62,7 @@ namespace Utilities
             
             level = Mathf.Clamp(level, 1, int.MaxValue);
             
+            EventHandler.UpdateEnvironment(level);
             levelUpExp = CalculateLevelUpExp(level);
             currentPeriodExp = level > 4 ? CalculateLevelUpExp((int)(level / 5) * 4) : 0;
             nextPeriodExp = CalculateLevelUpExp(((int)(level / 5) + 1) * 4);

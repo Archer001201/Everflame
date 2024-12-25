@@ -20,5 +20,12 @@ namespace Utilities
         {
             onDestroyResource?.Invoke(type, time);
         }
+        
+        public static Action<int> onUpdateEnvironment;
+
+        public static void UpdateEnvironment(int level)
+        {
+            onUpdateEnvironment?.Invoke(level);
+        }
     }
 }
