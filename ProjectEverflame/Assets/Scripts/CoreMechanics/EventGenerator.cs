@@ -130,8 +130,8 @@ namespace CoreMechanics
                 "逐影灾厄" => obj.AddComponent<逐影灾厄>(),
                 "幻菇迷狂" => obj.AddComponent<幻菇迷狂>(),
                 //任务
-                "草药寻踪" => obj.AddComponent<草药寻踪>(),
-                "流火珍宝" => obj.AddComponent<流火珍宝>(),
+                "电光石火" => obj.AddComponent<电光石火>(),
+                "夙愿之痕" => obj.AddComponent<夙愿之痕>(),
                 //机遇
                 "风羽赠礼" => obj.AddComponent<风羽赠礼>(),
                 "雷卵奇迹" => obj.AddComponent<雷卵奇迹>(),

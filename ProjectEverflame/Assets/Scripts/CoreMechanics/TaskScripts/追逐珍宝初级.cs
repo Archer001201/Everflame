@@ -32,7 +32,7 @@ namespace CoreMechanics.TaskScripts
         {
             var origin = new Vector3(0, 0, 0);
             var radius = 20f;
-            prefab = Resources.Load<GameObject>("Prefabs/珍宝怪");
+            prefab = Resources.Load<GameObject>("Prefabs/野兽");
 
             if (prefab != null)
             {

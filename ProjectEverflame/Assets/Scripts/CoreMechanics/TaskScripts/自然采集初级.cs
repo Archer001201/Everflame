@@ -21,15 +21,17 @@ namespace CoreMechanics.TaskScripts
         
         protected override void Reward()
         {
-            gameManager.HandleProsperity(15, true);
+            // gameManager.HandleProsperity(25, true);
             ChangePlayerSpeed(1.5f, 10f);
             // Debug.Log("get reward");
+            gameManager.HandleNatureExp(gameManager.natureExp*0.2f, true);
+            gameManager.HandleScienceExp(gameManager.scienceExp*0.2f, true);
         }
 
         protected override void Punish()
         {
-            gameManager.HandleNatureExp(gameManager.natureExp * 0.1f, false);
-            gameManager.HandleScienceExp(gameManager.scienceExp * 0.1f, false);
+            gameManager.HandleNatureExp(gameManager.natureExp * 0.25f, false);
+            gameManager.HandleScienceExp(gameManager.scienceExp * 0.25f, false);
             ChangePlayerSpeed(0.5f, 10f);
             // Debug.Log("get punish");
         }
