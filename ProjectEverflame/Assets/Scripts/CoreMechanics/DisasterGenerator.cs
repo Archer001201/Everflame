@@ -16,6 +16,10 @@ namespace CoreMechanics
         public UiManager uiManager;
         public float duration;
         public GameManager gameManager;
+        public Vector2 period1Range;
+        public Vector2 period2Range;
+        public Vector2 period3Range;
+        public Vector2 period4Range;
         public List<DisasterStruct> universalDisasters;
         public List<DisasterStruct> period1Disasters;
         public List<DisasterStruct> period2Disasters;
@@ -68,10 +72,22 @@ namespace CoreMechanics
             currentDisasters.AddRange(universalDisasters);
             switch (gameManager.currentPeriod)
             {
-                case CivilPeriod.荒原纪: currentDisasters.AddRange(period1Disasters); break;
-                case CivilPeriod.启程纪: currentDisasters.AddRange(period2Disasters); break;
-                case CivilPeriod.黎明纪: currentDisasters.AddRange(period3Disasters); break;
-                case CivilPeriod.星辉纪: currentDisasters.AddRange(period4Disasters); break;
+                case CivilPeriod.荒原纪:
+                    currentDisasters.AddRange(period1Disasters); 
+                    range = period1Range;
+                    break;
+                case CivilPeriod.启程纪:
+                    currentDisasters.AddRange(period2Disasters);
+                    range = period2Range;
+                    break;
+                case CivilPeriod.黎明纪:
+                    currentDisasters.AddRange(period3Disasters); 
+                    range = period3Range;
+                    break;
+                case CivilPeriod.星辉纪: 
+                    currentDisasters.AddRange(period4Disasters); 
+                    range = period4Range;
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
