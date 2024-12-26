@@ -65,7 +65,7 @@ namespace Player
             }
             else
             {
-                if (_uiManager.eventObject) _uiManager.UpdateEventPanel(null);
+                if (_uiManager && _uiManager.eventObject) _uiManager.UpdateEventPanel(null);
             }
             
             

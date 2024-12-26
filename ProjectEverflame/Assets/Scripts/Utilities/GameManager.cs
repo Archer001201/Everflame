@@ -24,7 +24,8 @@ namespace Utilities
         public float scienceExp;
         public float trendRatio = 0.5f;
         public float nextPeriodExp = 100;
-        public float currentPeriodExp; 
+        public float currentPeriodExp;
+        public AudioClip clip;
 
         private UiManager _uiManager;
         private DisasterGenerator _disasterGenerator;
@@ -56,6 +57,7 @@ namespace Utilities
             if (levelUp)
             {
                 level++;
+                EventHandler.PlayAudio(clip);
                 HandleProsperity(50, true);
                 // Debug.Log("health: " + health);
             }

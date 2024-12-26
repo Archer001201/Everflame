@@ -48,5 +48,19 @@ namespace Utilities
         {
             onRemoveResource?.Invoke();
         }
+
+        public static Action onPlayEndVideo;
+
+        public static void PlayEndVideo()
+        {
+            onPlayEndVideo?.Invoke();
+        }
+
+        public static Action<AudioClip> onPlayAudio;
+
+        public static void PlayAudio(AudioClip clip)
+        {
+            onPlayAudio?.Invoke(clip);
+        }
     }
 }

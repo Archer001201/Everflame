@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Misc;
@@ -7,6 +8,7 @@ using Ui;
 using UnityEngine;
 using UnityEngine.Events;
 using Utilities;
+using EventHandler = Utilities.EventHandler;
 
 namespace CoreMechanics.EventScripts
 {
@@ -23,6 +25,7 @@ namespace CoreMechanics.EventScripts
         private MeshRenderer _meshRenderer;
         private TextMeshProUGUI _nameTmp;
         private BombGenerator _bombGenerator;
+        private AudioClip _clip;
         
         private void Awake()
         {
@@ -32,7 +35,17 @@ namespace CoreMechanics.EventScripts
             _uiManager = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<UiManager>();
             _bombGenerator = GameObject.FindWithTag("BombGenerator").GetComponent<BombGenerator>();
         }
-        
+
+        private void Start()
+        {
+            switch (eventStruct.eventType)
+            {
+                case EventType.任务: _clip = Resources.Load<AudioClip>("Arts/Audios/任务球_1"); break;
+                case EventType.危机: _clip = Resources.Load<AudioClip>("Arts/Audios/危机球"); break;
+                case EventType.机遇: _clip = Resources.Load<AudioClip>("Arts/Audios/任务球_2"); break;
+            }
+        }
+
         private void OnEnable()
         {
             StartCoroutine(ReturnObjectAfterTime(duration));
@@ -74,6 +87,7 @@ namespace CoreMechanics.EventScripts
 
         protected virtual void Pickup()
         {
+            EventHandler.PlayAudio(_clip);
             objectPool.ReturnToPool(gameObject);
         }
 

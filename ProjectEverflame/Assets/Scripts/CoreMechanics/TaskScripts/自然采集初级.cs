@@ -21,6 +21,7 @@ namespace CoreMechanics.TaskScripts
         
         protected override void Reward()
         {
+            base.Reward();
             // gameManager.HandleProsperity(25, true);
             ChangePlayerSpeed(1.5f, 10f);
             // Debug.Log("get reward");
@@ -30,6 +31,7 @@ namespace CoreMechanics.TaskScripts
 
         protected override void Punish()
         {
+            base.Punish();
             gameManager.HandleNatureExp(gameManager.natureExp * 0.25f, false);
             gameManager.HandleScienceExp(gameManager.scienceExp * 0.25f, false);
             ChangePlayerSpeed(0.5f, 10f);

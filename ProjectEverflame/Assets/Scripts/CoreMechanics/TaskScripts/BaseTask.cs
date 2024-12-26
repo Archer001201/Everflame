@@ -5,6 +5,7 @@ using Player;
 using Ui;
 using UnityEngine;
 using Utilities;
+using EventHandler = Utilities.EventHandler;
 
 namespace CoreMechanics.TaskScripts
 {
@@ -14,19 +15,26 @@ namespace CoreMechanics.TaskScripts
         protected float goal;
         protected float amount;
         protected TaskPanel taskPanel;
+        protected bool isDone;
+        private AudioClip _succeedClip;
+        private AudioClip _failedClip;
 
         private void Awake()
         {
             gameManager = GameObject.FindWithTag("GameManager").GetComponent<GameManager>();
             taskPanel = GetComponent<TaskPanel>();
+            _succeedClip = Resources.Load<AudioClip>("Arts/Audios/完成任务");
+            _failedClip = Resources.Load<AudioClip>("Arts/Audios/资源球");
         }
         
         public virtual void UpdateAmount(float val)
         {
+            if (isDone) return;
             amount += val;
             taskPanel.UpdateTaskProgress(amount/goal);
             if (amount >= goal)
             {
+                isDone = true;
                 Reward();
                 Destroy(gameObject);
             }
@@ -34,7 +42,8 @@ namespace CoreMechanics.TaskScripts
         
         protected void ChangePlayerSpeed(float rate, float time)
         {
-            GameObject.FindWithTag("Player").GetComponent<PlayerController>().StartChangeSpeed(rate, time);
+            var p = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+            if (p) p.StartChangeSpeed(rate, time);
         }
         
         protected void StartDestroyResources(ResourceType type, float time)
@@ -42,8 +51,15 @@ namespace CoreMechanics.TaskScripts
             Utilities.EventHandler.DestroyResource(type, time);
         }
 
-        protected abstract void Reward();
-        protected abstract void Punish();
+        protected virtual void Reward()
+        {
+            EventHandler.PlayAudio(_succeedClip);
+        }
+
+        protected virtual void Punish()
+        {
+            EventHandler.PlayAudio(_failedClip);
+        }
 
         protected void Bomb(float time, int wave)
         {

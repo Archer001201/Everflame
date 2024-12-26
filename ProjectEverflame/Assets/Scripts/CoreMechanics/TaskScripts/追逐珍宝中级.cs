@@ -55,6 +55,7 @@ namespace CoreMechanics.TaskScripts
 
         protected override void Reward()
         {
+            base.Reward();
             gameManager.HandleProsperity(15, true);
             gameManager.HandleNatureExp(gameManager.natureExp * 0.3f, true);
             // Debug.Log("get reward");
@@ -62,6 +63,7 @@ namespace CoreMechanics.TaskScripts
 
         protected override void Punish()
         {
+            base.Punish();
             // gameManager.HandleScienceExp(gameManager.scienceExp * 0.3f, false);
             StartDestroyResources(ResourceType.科技, 10);
             ChangePlayerSpeed(0.5f, 10f);

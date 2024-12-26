@@ -23,6 +23,7 @@ namespace CoreMechanics
         public Material matBlue;
         public Material matGreen;
         public ResourceType resourceType;
+        public AudioClip audioClip;
         // public bool destroyed;
         
         private GameManager _gameManager;
@@ -68,6 +69,7 @@ namespace CoreMechanics
 
         public void Pickup()
         {
+            EventHandler.PlayAudio(audioClip);
             onPickupEvent?.Invoke();
             objectPool.ReturnToPool(gameObject);
         }

@@ -302,6 +302,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_virtualGeometry: 0
+  m_virtualGeometryShadow: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -404,6 +406,7 @@ MonoBehaviour:
   matBlue: {fileID: 2100000, guid: 08eb8aa191ffa425a8c9d72d5d1b29e4, type: 2}
   matGreen: {fileID: 2100000, guid: 3147d51d699974b848731f7f688e54c8, type: 2}
   resourceType: 0
+  audioClip: {fileID: 8300000, guid: 9e4cfb79de809784d9f1d2cc1fbece11, type: 3}
 --- !u!1001 &2676256250654232529
 PrefabInstance:
   m_ObjectHideFlags: 0

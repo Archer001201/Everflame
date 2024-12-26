@@ -27,6 +27,7 @@ namespace CoreMechanics
         public List<DisasterStruct> period3Disasters;
         public List<DisasterStruct> period4Disasters;
         public List<DisasterStruct> currentDisasters;
+        public AudioClip clip;
 
         private void Awake()
         {
@@ -58,6 +59,7 @@ namespace CoreMechanics
                 }
                 
                 uiManager.UpdateDisasterPanel(nextDisaster);
+                EventHandler.PlayAudio(clip);
                 uiManager.disasterPanel.SetActive(true);
                 EventHandler.RemoveResource();
                 DealDamage(nextDisaster);

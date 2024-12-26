@@ -37,6 +37,7 @@ namespace Ui
         public Image expImage;
         public Image prosperityImage;
         public TextMeshProUGUI prosperityText;
+        public TextMeshProUGUI tipsText;
         
         [Header("Disaster Panel")]
         public GameObject disasterPanel;
@@ -62,6 +63,9 @@ namespace Ui
         public TextMeshProUGUI portalText;
         public TextMeshProUGUI thrusterText;
 
+        public GameObject gameOverPanel;
+        public GameObject victoryPanel;
+
         private void Awake()
         {
             disasterPanel.SetActive(false);
@@ -75,19 +79,22 @@ namespace Ui
             // GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>().SetUiManager(this);
         }
 
-        // private void Update()
-        // {
-        //     float targetFillAmount = gameManager.trendRatio;
-        //     // 使用 Mathf.Lerp 平滑过渡到目标值
-        //     trendImage.fillAmount = Mathf.Lerp(trendImage.fillAmount, targetFillAmount, 5f * Time.deltaTime);
-        //
-        //     float num1 = gameManager.prosperity / gameManager.maxProsperity;
-        //     prosperityImage.fillAmount = Mathf.Lerp(prosperityImage.fillAmount, num1, 5f * Time.deltaTime);
-        //
-        //     float num2 = (gameManager.levelExp - gameManager.currentPeriodExp) /
-        //                  (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
-        //     expImage.fillAmount = Mathf.Lerp(expImage.fillAmount, num2, 5f * Time.deltaTime);
-        // }
+        private void Update()
+        {
+            float targetFillAmount = gameManager.trendRatio;
+            // 使用 Mathf.Lerp 平滑过渡到目标值
+            trendImage.fillAmount = Mathf.Lerp(trendImage.fillAmount, targetFillAmount, 5f * Time.deltaTime);
+        
+            float num1 = gameManager.prosperity / gameManager.maxProsperity;
+            prosperityImage.fillAmount = Mathf.Lerp(prosperityImage.fillAmount, num1, 5f * Time.deltaTime);
+        
+            float num2 = (gameManager.levelExp - gameManager.currentPeriodExp) /
+                         (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
+            expImage.fillAmount = Mathf.Lerp(expImage.fillAmount, num2, 5f * Time.deltaTime);
+            
+            if (gameManager.prosperity <= 0) gameOverPanel.SetActive(true);
+            if (gameManager.level >= 16) victoryPanel.SetActive(true);
+        }
 
         public void UpdateUiElements()
         {
@@ -108,11 +115,18 @@ namespace Ui
             // float num2 = gameManager.nextPeriodExp - gameManager.currentPeriodExp;
             // expImage.fillAmount = (gameManager.level%4-1)*0.25f + gameManager.levelExp/gameManager.levelUpExp * 0.25f;
             // expImage.fillAmount = num1 / num2;
-            
-            trendImage.fillAmount = gameManager.trendRatio;
-            prosperityImage.fillAmount = gameManager.prosperity / gameManager.maxProsperity;
-            expImage.fillAmount = (gameManager.levelExp - gameManager.currentPeriodExp) /
-                                  (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
+
+            // if ()
+            tipsText.text = gameManager.trendRatio switch
+            {
+                // trendImage.fillAmount = gameManager.trendRatio;
+                // prosperityImage.fillAmount = gameManager.prosperity / gameManager.maxProsperity;
+                // expImage.fillAmount = (gameManager.levelExp - gameManager.currentPeriodExp) /
+                //                       (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
+                < 40 => "天灾将造成更多伤害；抵御人祸能力增强",
+                > 60 => "人祸将造成更多伤害；抵御天灾能力增强",
+                _ => tipsText.text
+            };
         }
 
         public void UpdateAlarmText(int time, string strName)
