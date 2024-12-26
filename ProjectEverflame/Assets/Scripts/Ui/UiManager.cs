@@ -75,19 +75,19 @@ namespace Ui
             // GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>().SetUiManager(this);
         }
 
-        private void Update()
-        {
-            float targetFillAmount = gameManager.trendRatio;
-            // 使用 Mathf.Lerp 平滑过渡到目标值
-            trendImage.fillAmount = Mathf.Lerp(trendImage.fillAmount, targetFillAmount, 5f * Time.deltaTime);
-
-            float num1 = gameManager.prosperity / gameManager.maxProsperity;
-            prosperityImage.fillAmount = Mathf.Lerp(prosperityImage.fillAmount, num1, 5f * Time.deltaTime);
-
-            float num2 = (gameManager.levelExp - gameManager.currentPeriodExp) /
-                         (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
-            expImage.fillAmount = Mathf.Lerp(expImage.fillAmount, num2, 5f * Time.deltaTime);
-        }
+        // private void Update()
+        // {
+        //     float targetFillAmount = gameManager.trendRatio;
+        //     // 使用 Mathf.Lerp 平滑过渡到目标值
+        //     trendImage.fillAmount = Mathf.Lerp(trendImage.fillAmount, targetFillAmount, 5f * Time.deltaTime);
+        //
+        //     float num1 = gameManager.prosperity / gameManager.maxProsperity;
+        //     prosperityImage.fillAmount = Mathf.Lerp(prosperityImage.fillAmount, num1, 5f * Time.deltaTime);
+        //
+        //     float num2 = (gameManager.levelExp - gameManager.currentPeriodExp) /
+        //                  (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
+        //     expImage.fillAmount = Mathf.Lerp(expImage.fillAmount, num2, 5f * Time.deltaTime);
+        // }
 
         public void UpdateUiElements()
         {
@@ -108,6 +108,11 @@ namespace Ui
             // float num2 = gameManager.nextPeriodExp - gameManager.currentPeriodExp;
             // expImage.fillAmount = (gameManager.level%4-1)*0.25f + gameManager.levelExp/gameManager.levelUpExp * 0.25f;
             // expImage.fillAmount = num1 / num2;
+            
+            trendImage.fillAmount = gameManager.trendRatio;
+            prosperityImage.fillAmount = gameManager.prosperity / gameManager.maxProsperity;
+            expImage.fillAmount = (gameManager.levelExp - gameManager.currentPeriodExp) /
+                                  (gameManager.nextPeriodExp - gameManager.currentPeriodExp);
         }
 
         public void UpdateAlarmText(int time, string strName)
