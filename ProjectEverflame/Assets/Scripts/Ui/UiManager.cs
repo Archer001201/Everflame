@@ -65,9 +65,15 @@ namespace Ui
 
         public GameObject gameOverPanel;
         public GameObject victoryPanel;
+        public GameObject optionPanel;
+        private InputControls _controls;
+        public GameObject abilityTips1;
+        public GameObject abilityTips2;
 
         private void Awake()
         {
+            _controls = new InputControls();
+            _controls.Play.Esc.performed += _ => HandleOptionPanel();
             disasterPanel.SetActive(false);
             eventPanel.SetActive(false);
             gameManager.SetUiManager(this);
@@ -77,6 +83,16 @@ namespace Ui
             GameObject.FindWithTag("Player").GetComponent<Teleport>().SetUiManager(this);
             // _taskManager = GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>();
             // GameObject.FindWithTag("TaskManager").GetComponent<TaskManager>().SetUiManager(this);
+        }
+
+        private void OnEnable()
+        {
+            _controls.Enable();
+        }
+
+        private void OnDisable()
+        {
+            _controls.Disable();
         }
 
         private void Update()
@@ -208,6 +224,11 @@ namespace Ui
             var p = obj.GetComponent<TaskPanel>();
             p.UpdateTaskText(eventStruct.effect);
             p.StartTask(time);
+        }
+
+        private void HandleOptionPanel()
+        {
+            optionPanel.SetActive(!optionPanel.activeSelf);
         }
     }
 }

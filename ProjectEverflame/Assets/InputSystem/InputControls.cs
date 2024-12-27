@@ -44,6 +44,15 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8e8ae4f-6f27-4592-8521-822d362da45b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -68,6 +77,17 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
                     ""action"": ""SwitchAbility"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c04b27d7-6124-4449-86c1-e38c4eebf2e4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -78,6 +98,7 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
         m_Play = asset.FindActionMap("Play", throwIfNotFound: true);
         m_Play_UseAbility = m_Play.FindAction("UseAbility", throwIfNotFound: true);
         m_Play_SwitchAbility = m_Play.FindAction("SwitchAbility", throwIfNotFound: true);
+        m_Play_Esc = m_Play.FindAction("Esc", throwIfNotFound: true);
     }
 
     ~@InputControls()
@@ -146,12 +167,14 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     private List<IPlayActions> m_PlayActionsCallbackInterfaces = new List<IPlayActions>();
     private readonly InputAction m_Play_UseAbility;
     private readonly InputAction m_Play_SwitchAbility;
+    private readonly InputAction m_Play_Esc;
     public struct PlayActions
     {
         private @InputControls m_Wrapper;
         public PlayActions(@InputControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @UseAbility => m_Wrapper.m_Play_UseAbility;
         public InputAction @SwitchAbility => m_Wrapper.m_Play_SwitchAbility;
+        public InputAction @Esc => m_Wrapper.m_Play_Esc;
         public InputActionMap Get() { return m_Wrapper.m_Play; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -167,6 +190,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @SwitchAbility.started += instance.OnSwitchAbility;
             @SwitchAbility.performed += instance.OnSwitchAbility;
             @SwitchAbility.canceled += instance.OnSwitchAbility;
+            @Esc.started += instance.OnEsc;
+            @Esc.performed += instance.OnEsc;
+            @Esc.canceled += instance.OnEsc;
         }
 
         private void UnregisterCallbacks(IPlayActions instance)
@@ -177,6 +203,9 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
             @SwitchAbility.started -= instance.OnSwitchAbility;
             @SwitchAbility.performed -= instance.OnSwitchAbility;
             @SwitchAbility.canceled -= instance.OnSwitchAbility;
+            @Esc.started -= instance.OnEsc;
+            @Esc.performed -= instance.OnEsc;
+            @Esc.canceled -= instance.OnEsc;
         }
 
         public void RemoveCallbacks(IPlayActions instance)
@@ -198,5 +227,6 @@ public partial class @InputControls: IInputActionCollection2, IDisposable
     {
         void OnUseAbility(InputAction.CallbackContext context);
         void OnSwitchAbility(InputAction.CallbackContext context);
+        void OnEsc(InputAction.CallbackContext context);
     }
 }

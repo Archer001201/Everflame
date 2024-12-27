@@ -50852,6 +50852,7 @@ MonoBehaviour:
   thrusterText: {fileID: 1089493873}
   gameOverPanel: {fileID: 0}
   victoryPanel: {fileID: 0}
+  optionPanel: {fileID: 0}
 --- !u!1 &1160792056
 GameObject:
   m_ObjectHideFlags: 0

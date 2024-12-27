@@ -7,6 +7,8 @@ namespace Ui
 {
     public class OptionPanel : MonoBehaviour
     {
+        public GameObject creditPanel;
+        
         private void OnEnable()
         {
             Time.timeScale = 0;
@@ -30,6 +32,11 @@ namespace Ui
         public void Deactive()
         {
             gameObject.SetActive(false);
+        }
+
+        public void PlayCredit()
+        {
+            creditPanel.SetActive(true);
         }
     }
 }

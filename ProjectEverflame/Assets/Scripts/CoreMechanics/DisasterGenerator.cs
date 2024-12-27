@@ -99,7 +99,7 @@ namespace CoreMechanics
 
         private void DealDamage(DisasterStruct disaster)
         {
-            var damage = (gameManager.level / 5 + 1)*disaster.damageToProsperity;
+            var damage = (gameManager.level / 7 + 1)*disaster.damageToProsperity;
             switch (gameManager.trendRatio)
             {
                 case <= 0.2f:

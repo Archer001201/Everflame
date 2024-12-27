@@ -80,8 +80,10 @@ namespace Utilities
 
             _thruster.unlocked = level >= 5;
             _uiManager.thrusterPanel.SetActive(_thruster.unlocked);
+            _uiManager.abilityTips1.SetActive(_thruster.unlocked);
             _teleport.unlocked = level >= 13;
             _uiManager.portalPanel.SetActive(_teleport.unlocked);
+            _uiManager.abilityTips2.SetActive(_teleport.unlocked);
             
             _eventGenerator.UpdateEventList();
             _resourceGenerator.UpdateEventList();
